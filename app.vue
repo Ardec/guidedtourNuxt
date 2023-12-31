@@ -1,8 +1,5 @@
 <script setup>
 
-import { useBaseUrl } from '~/composables/useBaseUrl';
-const baseUrl = useBaseUrl();
-
 // const { data: categories, execute } = useFetch(baseUrl + 'category/', {
 //   lazy: true
 // });
@@ -16,19 +13,7 @@ const baseUrl = useBaseUrl();
 </script>
 
 <template>
-  <div class="main-container">
-    <hr>
-    NUXT 3
-    <hr>
-    <ClientOnly>
-      Adres mojego API z ENV: {{ baseUrl }}
-      <div>
-        <!-- <div v-for="category in categories.data.categories" :key="category.id">
-          {{ category.name }}
-        </div> -->
-      </div>
-    </ClientOnly>
-
+  <div class="app-container">
      <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
@@ -37,24 +22,45 @@ const baseUrl = useBaseUrl();
   </div>
 </template>
 
-<style lang="scss">
-body{
-  background-color: $backgorund;
-  font-family: 'FarAwayGalaxy', sans-serif;
-  margin:0 auto;
-  display:flex;
+<style lang="scss" scoped>
+
+body {
+    margin: 0;
+    padding: 16px; // Ustawienie paddingu na 16px
+    display: flex;
+    box-sizing: border-box;
+    min-width: 100vw; // Minimalna szerokość na 100% szerokości widoku
 }
+
 .logo-container {
-  display: flex;
-  justify-content: center; // Wyśrodkowanie w poziomie
-  align-items: center; // Wyśrodkowanie w pionie
+    display: flex;
+    justify-content: center; // Wyśrodkowanie w poziomie
+    align-items: center; // Wyśrodkowanie w pionie
 }
-.main-container {
-  display: flex;
-  flex-direction: column; // Elementy ułożone pionowo
-  justify-content: center; // Wyśrodkowanie w pionie
-  align-items: center; // Wyśrodkowanie w poziomie
-  height: 100%;
-  width: 100vw;
+
+.app-container {
+    display: flex;
+    flex-direction: column; // Elementy ułożone pionowo
+    justify-content: center; // Wyśrodkowanie w pionie
+    align-items: center; // Wyśrodkowanie w poziomie
+    height: 100%;
+    margin: 0 auto; // Automatyczne wyśrodkowanie poziome
+    padding: 0 16px; // Ustawienie paddingu poziomego na 16px
+    width: 100%; // Szerokość na 100%
+    max-width: 100vw; // Maksymalna szerokość na 100% szerokości widoku
 }
+
+</style>
+
+<style lang="scss">
+* {
+    box-sizing: border-box; // Ustawienie box-sizing na border-box dla wszystkich elementów
+}
+
+body{
+  background: url('assets/img/background.png') no-repeat center center fixed;
+  background-size: cover;
+  font-family: 'FarAwayGalaxy', sans-serif;
+}
+
 </style>
