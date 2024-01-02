@@ -17,8 +17,8 @@
      <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
-    <img class="animate__animated animate__bounce logo-container" src="~/assets/img/kdev.png" alt="Discover Nuxt 3" />
-    Template K-Development SoftwareHouse
+    <!-- <img class="animate__animated animate__bounce logo-container" src="~/assets/img/kdev.png" alt="Discover Nuxt 3" />
+    Template K-Development SoftwareHouse -->
   </div>
 </template>
 
@@ -57,10 +57,11 @@ body {
     box-sizing: border-box; // Ustawienie box-sizing na border-box dla wszystkich elementów
 }
 
-body{
-  background: url('assets/img/background.png') no-repeat center center fixed;
-  background-size: cover;
-  font-family: 'Inter', sans-serif; // Zaktualizowana czcionka na Inter Regular
+body {
+  background: #e2e2e2; /* Podstawowy szary kolor tła */
+  background: url('assets/img/background.png') no-repeat center center fixed, #e2e2e2; /* Dodanie obrazu tła na wierzch */
+  background-size: cover; /* Zapewnia pokrycie całego tła obrazem */
+  font-family: 'Inter', sans-serif; /* Zastosowanie czcionki Inter */
 }
 
 </style>
