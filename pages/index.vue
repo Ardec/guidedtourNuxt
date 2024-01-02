@@ -1,11 +1,8 @@
 <template>
   <div class="main-container">
-   <!-- INDEX -->
-   <TopBar />
+   <TopBar :leftIcon="true" :rightIcon="false" />
    <SideMenu />
-    <hr>
-    <!-- NUXT 3 -->
-    <hr>
+   <FastSearch/>
     <ClientOnly>
       <!-- Adres mojego API z ENV: {{ baseUrl }}
       MenuVisiblesss {{ menuVisible }} -->
