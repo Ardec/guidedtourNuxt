@@ -60,7 +60,7 @@ body {
 body{
   background: url('assets/img/background.png') no-repeat center center fixed;
   background-size: cover;
-  font-family: 'FarAwayGalaxy', sans-serif;
+  font-family: 'Inter', sans-serif; // Zaktualizowana czcionka na Inter Regular
 }
 
 </style>

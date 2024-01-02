@@ -1,14 +1,14 @@
 <template>
   <div class="main-container">
-   INDEX
+   <!-- INDEX -->
    <TopBar />
    <SideMenu />
     <hr>
-    NUXT 3
+    <!-- NUXT 3 -->
     <hr>
     <ClientOnly>
-      Adres mojego API z ENV: {{ baseUrl }}
-      MenuVisiblesss {{ menuVisible }}
+      <!-- Adres mojego API z ENV: {{ baseUrl }}
+      MenuVisiblesss {{ menuVisible }} -->
       <div>
         <!-- <div v-for="category in categories.data.categories" :key="category.id">
           {{ category.name }}
