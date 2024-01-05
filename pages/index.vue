@@ -5,12 +5,12 @@
    <FastSearch/>
    <!-- <Core :coreData="pageData.data" /> -->
    <!-- <Footer :assosiatedData="assosiatedData.data" :ownerData="ownerData.data" /> -->
+   {{pageData}}
+      {{ownerData}}
+      {{assosiatedData}}
     <ClientOnly>
       Adres mojego API z ENV: {{ baseUrl }}
       MenuVisiblesss {{ menuVisible }}
-      {{ownerData}}
-      {{pageData}}
-      {{assosiatedData}}
       <div>
       </div>
     </ClientOnly>
