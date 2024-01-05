@@ -5,12 +5,12 @@
    <FastSearch/>
    <!-- <Core :coreData="pageData.data" /> -->
    <!-- <Footer :assosiatedData="assosiatedData.data" :ownerData="ownerData.data" /> -->
-   {{pageData}}
+      {{pageData}}
       {{ownerData}}
-      {{assosiatedData}}
     <ClientOnly>
       Adres mojego API z ENV: {{ baseUrl }}
       MenuVisiblesss {{ menuVisible }}
+        {{assosiatedData}}
       <div>
       </div>
     </ClientOnly>
@@ -29,6 +29,10 @@ const { data: ownerData = "", executeOwnerData } = useFetch(baseUrl + 'owner/inf
 const { data: assosiatedData = "", executeAssosiated } = useFetch(baseUrl + 'assosiated/sites', {
   lazy: true
 });
+
+console.log(pageData)
+console.log(ownerData)
+console.log(assosiatedData)
 
 
 
