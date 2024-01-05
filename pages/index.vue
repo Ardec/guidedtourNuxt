@@ -20,6 +20,9 @@
 <script setup>
 const baseUrl = useBaseUrl();
 const { menuVisible } = useGlobalState();
+let pageData = "1"
+let ownerData = "2"
+let assosiatedData = "3"
 const { data: pageData, executePageData } = useFetch(baseUrl + 'main-page/', {
   lazy: true
 });
