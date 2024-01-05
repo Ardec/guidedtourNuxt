@@ -28,7 +28,7 @@
     </div>
     <div class="partners">
       <div class="description">
-        Official Partners
+        {{$attrs.sponsorsData}}
       </div>
     </div>
   </div>
@@ -49,7 +49,7 @@ const isVisible = ref(true);
   position: fixed;
   top: 0;
   left: 0;
-  width: 300px;
+  width: 320px;
   height: 100%;
   background: #E2E2E2;
   box-shadow: 0px 0px 20px 2px rgba(0, 0, 0, 0.25);

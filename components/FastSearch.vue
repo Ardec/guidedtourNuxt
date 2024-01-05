@@ -1,6 +1,6 @@
 <template>
     <div class="searcher">
- FAST SEARCH
+ <!-- FAST SEARCH -->
     </div>
 </template>
 
