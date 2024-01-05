@@ -5,12 +5,12 @@
    <FastSearch/>
    <!-- <Core :coreData="pageData.data" /> -->
    <!-- <Footer :assosiatedData="assosiatedData.data" :ownerData="ownerData.data" /> -->
-   {{pageData}}
+      {{pageData}}
       {{ownerData}}
-      {{assosiatedData}}
     <ClientOnly>
       Adres mojego API z ENV: {{ baseUrl }}
       MenuVisiblesss {{ menuVisible }}
+        {{assosiatedData}}
       <div>
       </div>
     </ClientOnly>
@@ -20,18 +20,19 @@
 <script setup>
 const baseUrl = useBaseUrl();
 const { menuVisible } = useGlobalState();
-let pageData = "1"
-let ownerData = "2"
-let assosiatedData = "3"
-const { data: pageData, executePageData } = useFetch(baseUrl + 'main-page/', {
+const { data: pageData = "", executePageData } = useFetch(baseUrl + 'main-page/', {
   lazy: true
 });
-const { data: ownerData, executeOwnerData } = useFetch(baseUrl + 'owner/info', {
+const { data: ownerData = "", executeOwnerData } = useFetch(baseUrl + 'owner/info', {
   lazy: true
 });
-const { data: assosiatedData, executeAssosiated } = useFetch(baseUrl + 'assosiated/sites', {
+const { data: assosiatedData = "", executeAssosiated } = useFetch(baseUrl + 'assosiated/sites', {
   lazy: true
 });
+
+console.log(pageData)
+console.log(ownerData)
+console.log(assosiatedData)
 
 
 
