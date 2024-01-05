@@ -141,6 +141,7 @@ const baseUrl = useBaseUrl();
 <style lang="scss" scoped>
 .sections{
     padding:0px 10px;
+    margin:0px 0px;
 }
 .section-title {
   justify-content: space-between;
