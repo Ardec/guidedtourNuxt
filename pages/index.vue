@@ -1,10 +1,10 @@
 <template>
   <div class="main-container">
-   <TopBar :leftIcon="true" :rightIcon="false" />
-   <SideMenu :sponsorsData="pageData.data.sponsors" />
+   <TopBar :ownerData="ownerData.data" :leftIcon="true" :rightIcon="false" />
+   <SideMenu :coreData="pageData.data" />
    <FastSearch/>
    <Core :coreData="pageData.data" />
-   <Footer />
+   <Footer :assosiatedData="assosiatedData.data" :ownerData="ownerData.data" />
     <ClientOnly>
       <!-- Adres mojego API z ENV: {{ baseUrl }}
       MenuVisiblesss {{ menuVisible }} -->
@@ -17,9 +17,16 @@
 <script setup>
 const baseUrl = useBaseUrl();
 const { menuVisible } = useGlobalState();
-const { data: pageData, execute } = useFetch(baseUrl + 'main-page/', {
+const { data: pageData, executePageData } = useFetch(baseUrl + 'main-page/', {
   lazy: true
 });
+const { data: ownerData, executeOwnerData } = useFetch(baseUrl + 'owner/info', {
+  lazy: true
+});
+const { data: assosiatedData, executeAssosiated } = useFetch(baseUrl + 'assosiated/sites', {
+  lazy: true
+});
+
 
 
 
