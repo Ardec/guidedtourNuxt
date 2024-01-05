@@ -1,6 +1,6 @@
 <template>
   <div class="main-container">
-   <TopBar :ownerData="ownerData.data" :leftIcon="true" :rightIcon="false" />
+   <!-- <TopBar :ownerData="ownerData.data" :leftIcon="true" :rightIcon="false" /> -->
    <!-- <SideMenu :coreData="pageData.data" /> -->
    <FastSearch/>
    <!-- <Core :coreData="pageData.data" /> -->
