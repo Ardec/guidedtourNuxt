@@ -1,6 +1,6 @@
 <template>
   <div class="topbar">
-    <div class="sub-title">Andorra</div>
+    <div class="sub-title">{{$attrs.ownerData.ownerInfos[0].name}}</div>
     <div class="title-container">
       <div  class="left-icon">
         <svg
@@ -41,7 +41,7 @@
         </svg>
       </div>
     </div>
-    <div class="description">Discover the world with a guide!</div>
+    <div class="description">{{$attrs.ownerData.ownerInfos[0].shortDescription}}</div>
   </div>
 </template>
 
