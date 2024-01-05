@@ -1,25 +1,28 @@
 <template>
   <div class="main-container">
    <TopBar :leftIcon="true" :rightIcon="false" />
-   <SideMenu />
+   <SideMenu :sponsorsData="pageData.data.sponsors" />
    <FastSearch/>
+   <Core :coreData="pageData.data" />
+   <Footer />
     <ClientOnly>
       <!-- Adres mojego API z ENV: {{ baseUrl }}
       MenuVisiblesss {{ menuVisible }} -->
       <div>
-        <!-- <div v-for="category in categories.data.categories" :key="category.id">
-          {{ category.name }}
-        </div> -->
       </div>
     </ClientOnly>
   </div>
 </template>
 
 <script setup>
-import { useBaseUrl } from '~/composables/useBaseUrl';
 const baseUrl = useBaseUrl();
-import { useGlobalState } from '~/composables/useGlobalState.ts'
 const { menuVisible } = useGlobalState();
+const { data: pageData, execute } = useFetch(baseUrl + 'main-page/', {
+  lazy: true
+});
+
+
+
 </script>
 
 <style lang="scss" scoped>

@@ -46,9 +46,7 @@
 </template>
 
 <script setup>
-import { useGlobalState } from "~/composables/useGlobalState";
 const { menuVisible, toggleMenu } = useGlobalState();
-console.log("menuVisible.value in component:", menuVisible.value);
 </script>
 
 <style lang="scss" scoped>

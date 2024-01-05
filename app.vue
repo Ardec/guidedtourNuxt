@@ -1,8 +1,6 @@
 <script setup>
 
-// const { data: categories, execute } = useFetch(baseUrl + 'category/', {
-//   lazy: true
-// });
+
 
 // onMounted(() => {
 //   execute().then(() => {
