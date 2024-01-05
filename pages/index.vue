@@ -8,9 +8,9 @@
     <ClientOnly>
       Adres mojego API z ENV: {{ baseUrl }}
       MenuVisiblesss {{ menuVisible }}
-      {{ownerData.data}}
-      {{pageData.data}}
-      {{assosiatedData.data}}
+      {{ownerData}}
+      {{pageData}}
+      {{assosiatedData}}
       <div>
       </div>
     </ClientOnly>
