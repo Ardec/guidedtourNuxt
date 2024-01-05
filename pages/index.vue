@@ -1,10 +1,10 @@
 <template>
   <div class="main-container">
-   <!-- <TopBar :ownerData="ownerData.data" :leftIcon="true" :rightIcon="false" />
-   <SideMenu :coreData="pageData.data" />
+   <TopBar :ownerData="ownerData.data" :leftIcon="true" :rightIcon="false" />
+   <!-- <SideMenu :coreData="pageData.data" /> -->
    <FastSearch/>
-   <Core :coreData="pageData.data" />
-   <Footer :assosiatedData="assosiatedData.data" :ownerData="ownerData.data" /> -->
+   <!-- <Core :coreData="pageData.data" /> -->
+   <Footer :assosiatedData="assosiatedData.data" :ownerData="ownerData.data" />
     <ClientOnly>
       <!-- Adres mojego API z ENV: {{ baseUrl }}
       MenuVisiblesss {{ menuVisible }} -->
