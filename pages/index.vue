@@ -1,14 +1,14 @@
 <template>
   <div class="main-container">
    <TopBar v-if="ownerData != null" :ownerData="ownerData" :leftIcon="true" :rightIcon="false" />
-   <SideMenu :coreData="pageData" />
+   <SideMenu :coreData="pageData.data" />
    <FastSearch/>
    <Core :coreData="pageData.data" />
    <Footer :assosiatedData="assosiatedData.data" :ownerData="ownerData.data" />
     <ClientOnly>
-      Adres mojego API z ENV: {{ baseUrl }}
-      MenuVisiblesss {{ menuVisible }}
-        {{assosiatedData}}
+      <!-- Adres mojego API z ENV: {{ baseUrl }}
+      MenuVisiblesss {{ menuVisible }} -->
+        <!-- {{assosiatedData}} -->
       <div>
       </div>
     </ClientOnly>
