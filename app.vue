@@ -1,13 +1,6 @@
 <script setup>
 
 
-
-// onMounted(() => {
-//   execute().then(() => {
-//     console.log('Kategorie:', categories.value.data.categories); // Wyświetl dane kategorii
-//   });
-// });
-
 </script>
 
 <template>
