@@ -19,9 +19,15 @@
 const baseUrl = useBaseUrl();
 const { menuVisible } = useGlobalState();
 
-const { data: pageData } = await useFetch(baseUrl + 'main-page/');
-const { data: ownerData } = await useFetch(baseUrl + 'owner/info');
-const { data: assosiatedData } = await useFetch(baseUrl + 'assosiated/sites');
+const { data: pageData } = useFetch(baseUrl + 'main-page/', {
+  lazy: true
+});
+const { data: ownerData } = useFetch(baseUrl + 'owner/info', {
+  lazy: true
+});
+const { data: assosiatedData } = useFetch(baseUrl + 'assosiated/sites', {
+  lazy: true
+});
 
 // console.log(pageData)
 // console.log(ownerData)
