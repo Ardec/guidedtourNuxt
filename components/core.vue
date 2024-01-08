@@ -3,7 +3,7 @@
     <div class="section">
       <div class="section-title">
         <div class="title">Categories</div>
-        <NuxtLink to="/"><div class="all">all ></div></NuxtLink>
+        <NuxtLink to="/categories"><div class="all">all ></div></NuxtLink>
       </div>
       <div class="section-box">
         <div class="item" v-for="item in $attrs.coreData.categories" :key="item.id">
