@@ -1,4 +1,5 @@
 <template>
+  <h6 v-if="!$attrs?.items || !$attrs?.items.length" class="empty-list">Brak przypisanych obiektów pod {{ route.params.itemname }}</h6>
   <div class="category_container">
     <div v-for="item in $attrs?.items" :key="item.id">
       <div v-if="item.isActive == '1'">
@@ -29,6 +30,7 @@
 </template>
 
 <script setup>
+const route = useRoute();
 const baseUrl = useBaseUrl();
 </script>
 
@@ -74,5 +76,9 @@ const baseUrl = useBaseUrl();
       font-weight: 300;
     }
   }
+}
+
+.empty-list {
+    font-size: 14px;
 }
 </style>
