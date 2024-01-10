@@ -1,13 +1,11 @@
 <template>
   <div class="pictograms">
     <div v-for="(item, index) in $attrs.items" :key="item.id">
-      <div v-if="index < 9">
-        <!-- <div @click="change_location(item.flag.url)"> -->
-        <img :src="baseUrl + item.image" class="pictogram" />
-        <!-- <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]">
-            <strong>{{ item.flag.name }}</strong>
-            <em> {{ item.flag.url }}</em>
-          </q-tooltip> -->
+      <div v-if="index < 9" :title="`${item.name} ${item.url}`">
+        <NuxtLink v-if="item.url" :to="item.url">
+          <img :src="baseUrl + item.image" class="pictogram" />
+        </NuxtLink>
+        <img v-if="!item.url" :src="baseUrl + item.image" class="pictogram" />
       </div>
     </div>
   </div>
