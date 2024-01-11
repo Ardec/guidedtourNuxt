@@ -13,6 +13,8 @@
 </template>
 
 <script setup>
+const attrs = useAttrs();
+const lang = attrs.lang;
 const translate = (zmienna) => {
   if (zmienna.name == 'Otwarte teraz' && lang.labelOpenNow != null) {
     zmienna.name = lang.labelOpenNow;
@@ -126,8 +128,7 @@ const check = (zm) => {
     }
   });
 
-  // return translate(zmienna); //FIXME!!!
-  return zmienna;
+  return translate(zmienna);
 };
 </script>
 
