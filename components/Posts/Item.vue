@@ -2,7 +2,7 @@
   <div class="wiz_box_container card_gradient">
     <PostsPictograms :items="activeFlags" />
     <div class="image-info">
-      <NuxtLink v-if="$attrs.item.isBig" :to="'/singlePost-' + $attrs.item.id">
+      <NuxtLink v-if="$attrs.item.isBig !== false" :to="'/singlePost-' + $attrs.item.id">
       <img
         class="main-image"
         :src="
@@ -10,7 +10,7 @@
         "
         onerror="this.onerror=null; this.src='assets/project.jpeg';" />
       </NuxtLink>
-      <img v-if="!$attrs.item.isBig" 
+      <img v-if="$attrs.item.isBig === false" 
         class="main-image"
         :src="
           $attrs.item.image == null || $attrs.item.image == '' ? '/assets/project.jpeg' : baseUrl + $attrs.item.image

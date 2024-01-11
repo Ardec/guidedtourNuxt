@@ -30,7 +30,6 @@
 </template>
 
 <script setup>
-const route = useRoute();
 const baseUrl = useBaseUrl();
 </script>
 
