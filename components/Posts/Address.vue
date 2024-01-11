@@ -1,4 +1,8 @@
 <template>
+  <div v-if="$attrs.withTitle">
+    <h6 v-if="$attrs.lang?.titleAdresses == null">Adres-y:</h6>
+    <h6 v-else>{{ $attrs.lang?.titleAdresses }}</h6>
+  </div>
   <div v-for="address in $attrs.item.address" :key="address.id">
     <div class="address">
       <span>

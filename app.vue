@@ -55,4 +55,9 @@ body {
   font-family: 'Inter', sans-serif; /* Zastosowanie czcionki Inter */
 }
 
+h6 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    letter-spacing: .0125em;
+}
 </style>
