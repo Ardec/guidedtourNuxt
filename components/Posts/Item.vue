@@ -20,7 +20,7 @@
         <p v-html="preserveNewlines($attrs.item.longDescription)" class="wiz_slogan"></p>
         <p v-html="preserveNewlines($attrs.item.name)" class="wiz_header"></p>
         <p v-html="preserveNewlines($attrs.item.shortDescription)" class="wiz_desc"></p>
-        <PostsOpenCloseIndicator :item="$attrs.item"/>
+        <PostsOpenCloseIndicator :item="$attrs.item" :lang="$attrs.lang"/>
         <PostsPictograms :items="activePictograms" />
       </div>
     </div>
@@ -54,6 +54,10 @@ const preserveNewlines = (text) => {
 
   .image-info {
     display: flex;
+
+    img {
+      max-width: none;
+    }
   }
 
   .main-image {

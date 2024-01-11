@@ -1,12 +1,14 @@
 <template>
   <div class="wiz_container">
     <div v-for="item in $attrs.items" :key="item.id">
-      <PostsItem :item="item" />
+      <PostsItem :item="item" :lang="lang"/>
     </div>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+const lang = await useFetchLang();
+</script>
 
 <style scoped lang="scss">
 .wiz_container {
