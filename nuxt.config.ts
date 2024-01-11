@@ -2,6 +2,10 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
 
+  modules: [
+    '@nuxt/ui'
+  ],
+
   runtimeConfig: {
     public: {
       DATABASE_ID: process.env.QUASAR_DATA
