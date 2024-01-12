@@ -73,6 +73,7 @@ const isVisible = ref(true);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  z-index: 100;
 }
 
 .overlay-menu::before {

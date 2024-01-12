@@ -5,6 +5,9 @@
   <div class="main-container">
     <PostsPictograms :items="activePictograms" />
   </div>
+  <div class="main-container" v-if="images?.length > 0">
+      <Gallery :items="images"/>
+  </div>
   <div
     v-if="item.extraDescription != '' && item.extraDescription != null && item.longDescriptionVisible != false"
     class="card_text_container">
@@ -33,6 +36,8 @@ const activeFlags = item?.flag?.map((item) => item.flag).filter((item) => item.i
 const activePictograms = item?.pictograms?.map((item) => item.pictogram).filter((item) => item.isActive);
 
 const connectedVisitingCards = item.connectedVisitingCards.map((item) => item.card);
+
+const images = item.gallery?.map((item) => item.image?.path);
 </script>
 
 <style scoped lang="scss">
