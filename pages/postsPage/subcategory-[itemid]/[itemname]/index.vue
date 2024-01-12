@@ -1,5 +1,4 @@
+
 <template>
-    <div>
-        index vue z postsPage z subcategorii
-    </div>
+  <PostsItems from="subcategory"/>
 </template>

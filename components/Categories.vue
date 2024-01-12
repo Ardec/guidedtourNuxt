@@ -5,9 +5,9 @@
       <div v-if="item.isActive == '1'">
         <NuxtLink
           :to="
-            item.searchEngine === '1'
+            item.searchEngine === '1' || item.searchEngine === 1 
               ? `/buttonsPage/${$attrs?.type}-${item.id}/${item.name}`
-              : item.searchEngine === '2'
+              : item.searchEngine === '2' || item.searchEngine === 2 
               ? `/subcategorypage/${$attrs?.type}-${item.id}/${item.name}`
               : `/postsPage/${$attrs?.type}-${item.id}/${item.name}`
           ">
