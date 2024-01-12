@@ -1,17 +1,25 @@
 <template>
-  <div class="pictograms-container">
+  <div class="main-container">
     <PostsPictograms :items="activeFlags" />
   </div>
-  <div class="pictograms-container">
+  <div class="main-container">
     <PostsPictograms :items="activePictograms" />
   </div>
-  <div v-if="item.extraDescription != '' && item.extraDescription != null && item.longDescriptionVisible != false" class="card_text_container">
+  <div
+    v-if="item.extraDescription != '' && item.extraDescription != null && item.longDescriptionVisible != false"
+    class="card_text_container">
     <div v-html="item.extraDescription"></div>
   </div>
-  <PostsConnectedCard :items="connectedVisitingCards" :lang="lang"/> 
-  <PostsContact :item="item" :lang="lang"/> 
-  <PostsOpenHours :item="item" :lang="lang"/> 
-  <PostsAddress :item="item" :lang="lang" :withTitle="true"/> 
+  <PostsConnectedCard :items="connectedVisitingCards" :lang="lang" />
+  <div class="main-container">
+    <PostsContact :item="item" :lang="lang" />
+  </div>
+  <div class="main-container">
+    <PostsOpenHours :item="item" :lang="lang" />
+  </div>
+  <div class="main-container">
+    <PostsAddress :item="item" :lang="lang" :withTitle="true" />
+  </div>
 </template>
 
 <script setup>
@@ -22,15 +30,13 @@ const lang = await useFetchLang();
 const item = card.value.data.visitingCard;
 
 const activeFlags = item?.flag?.map((item) => item.flag).filter((item) => item.isActive);
-const activePictograms = item?.pictograms
-  ?.map((item) => item.pictogram)
-  .filter((item) => item.isActive);
+const activePictograms = item?.pictograms?.map((item) => item.pictogram).filter((item) => item.isActive);
 
-const connectedVisitingCards = item.connectedVisitingCards.map(item => item.card);
+const connectedVisitingCards = item.connectedVisitingCards.map((item) => item.card);
 </script>
 
 <style scoped lang="scss">
-.pictograms-container,
+.main-container,
 .card_text_container {
   padding: 16px;
 }

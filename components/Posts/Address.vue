@@ -1,5 +1,5 @@
 <template>
-  <div v-if="$attrs.withTitle">
+  <div v-if="$attrs.withTitle && $attrs.item?.address?.length > 0">
     <h6 v-if="$attrs.lang?.titleAdresses == null">Adres-y:</h6>
     <h6 v-else>{{ $attrs.lang?.titleAdresses }}</h6>
   </div>

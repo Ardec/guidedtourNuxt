@@ -1,5 +1,3 @@
 <template>
-    <div>
-        index vue z postsPage buttonów
-    </div>
+  <PostsItems from="button"/>
 </template>

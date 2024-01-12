@@ -60,4 +60,8 @@ h6 {
     font-weight: 500;
     letter-spacing: .0125em;
 }
+
+img {
+  max-width: none;
+}
 </style>

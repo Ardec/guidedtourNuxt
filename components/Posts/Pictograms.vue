@@ -18,6 +18,7 @@ const baseUrl = useBaseUrl();
 <style scoped lang="scss">
 .pictograms {
   display: flex;
+  flex-wrap: wrap;
 }
 .pictogram {
   height: 31px;

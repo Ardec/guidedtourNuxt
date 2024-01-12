@@ -54,10 +54,7 @@ const preserveNewlines = (text) => {
 
   .image-info {
     display: flex;
-
-    img {
-      max-width: none;
-    }
+    margin-top: 3px;
   }
 
   .main-image {

@@ -88,7 +88,7 @@ const lang = attrs.lang;
 .main-container {
   background: rgba(255, 255, 255, 0.6);
   padding: 5px;
-  border-radius: 3px;
+  border-radius: 8px;
 }
 
 .toggle-container {

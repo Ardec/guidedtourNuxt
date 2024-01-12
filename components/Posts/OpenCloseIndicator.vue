@@ -56,6 +56,7 @@ const currentMinute = () => {
 };
 
 const check = (zm) => {
+  /// FIXME it is not possible to check if time filters should be set if pagination will be used in the future
   // if (zm != '') {
   //   time_filters = true;
   // }
