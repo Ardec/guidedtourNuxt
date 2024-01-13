@@ -1,16 +1,24 @@
 <template>
-  <div v-if="$attrs?.items?.length >0">
-    <h6 v-if="$attrs.lang?.titleBeSureNotMiss == null">Be sure not to miss</h6>
-    <h6 v-else>{{ $attrs.lang?.titleBeSureNotMiss }}</h6>
+  <div v-if="$attrs?.items?.length > 0">
+    <span v-if="$attrs.type">
+      <h6 class="q-pl-md" v-if="$attrs.lang.titleCheckThisOut == null">Check this out</h6>
+      <h6 v-else>{{ $attrs.lang.titleCheckThisOut }}</h6>
+    </span>
+    <span v-else>
+      <h6 v-if="$attrs.lang?.titleBeSureNotMiss == null">Be sure not to miss</h6>
+      <h6 v-else>{{ $attrs.lang?.titleBeSureNotMiss }}</h6>
+    </span>
   </div>
   <div class="card_container">
     <div v-for="item in $attrs?.items" :key="item.id">
-      <NuxtLink :to="`/singlePost-${item.id}`">
+      <NuxtLink :to="$attrs.type ? `/postsPage/${$attrs?.type}-${item.id}/${item.name}` : `/singlePost-${item.id}`">
         <div class="card_container_box">
           <div class="card">
             <img
               class="card_container_box card_text_container"
-              :src="item.image == null || item.image == '' ? '/assets/project.jpeg' : baseUrl + item.image"
+              :src="
+                item[imageField] == null || item[imageField] == '' ? '/assets/project.jpeg' : baseUrl + item[imageField]
+              "
               onerror="this.onerror=null; this.src='assets/project.jpeg';" />
             <div class="overlay">
               {{
@@ -28,6 +36,8 @@
 
 <script setup>
 const baseUrl = useBaseUrl();
+const attr = useAttrs();
+const imageField = attr.imageField || 'image';
 </script>
 
 <style scoped lang="scss">
@@ -62,6 +72,7 @@ const baseUrl = useBaseUrl();
     font-size: 14px;
     text-transform: uppercase;
     line-height: 21px;
+    overflow-wrap: break-word;
 
     .description {
       text-transform: none;

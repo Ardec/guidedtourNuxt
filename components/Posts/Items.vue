@@ -58,9 +58,16 @@ const findPosts = async (filters) => {
       ?.map((item) => item.visitingCard)
       .filter((item) => item.isActive !== false);
   }
-    if (attrs.from === 'button') {
+  if (attrs.from === 'button') {
     const button = await useFetchButton(route.params.itemid);
     items = button?.value?.data?.button?.visitingCard
+      ?.map((item) => item.visitingCard)
+      .filter((item) => item.isActive !== false);
+  }
+  if (attrs.from === 'group') {
+    const group = await useFetchGroup(route.params.itemid);
+
+    items = group?.value?.data?.group?.visitingCards
       ?.map((item) => item.visitingCard)
       .filter((item) => item.isActive !== false);
   }

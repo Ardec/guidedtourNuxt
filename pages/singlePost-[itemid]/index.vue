@@ -13,7 +13,13 @@
     class="card_text_container">
     <div v-html="item.extraDescription"></div>
   </div>
-  <PostsConnectedCard :items="connectedVisitingCards" :lang="lang" />
+  <div class="main-container" v-if="connectedVisitingCards?.length > 0">
+    <PostsConnectedCard :items="connectedVisitingCards" :lang="lang" />
+  </div>
+  <div class="main-container" v-if="item.groups?.length > 0">
+    <PostsConnectedCard :items="item.groups" :lang="lang" imageField="picture" type="group" />
+  </div>
+
   <div class="main-container">
     <PostsContact :item="item" :lang="lang" />
   </div>
