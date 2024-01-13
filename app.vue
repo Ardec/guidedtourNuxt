@@ -64,4 +64,31 @@ h6 {
 img {
   max-width: none;
 }
+
+.section-box {
+  padding: 8px 0px;
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  overflow-x: auto; /* Enable horizontal scrolling */
+  overflow-y: hidden; /* Hide vertical scrollbar */
+  scrollbar-width: thin; /* Można ustawić 'auto', 'thin' lub 'none' */
+  scrollbar-color: $accent transparent; /* Kolor suwaka i tła (ścieżki) */
+  //justify-content: center;
+}
+
+/* Stylizowanie paska przewijania dla przeglądarek WebKit */
+.section-box::-webkit-scrollbar {
+  height: 8px; /* Grubość paska przewijania */
+}
+
+.section-box::-webkit-scrollbar-track {
+  background: transparent; /* Kolor tła ścieżki paska przewijania */
+}
+
+.section-box::-webkit-scrollbar-thumb {
+  background: orange; /* Kolor suwaka paska przewijania */
+  border-radius: 2px; /* Zaokrąglenie krawędzi suwaka */
+  min-height: 20px; /* Minimalna długość suwaka */
+}
 </style>

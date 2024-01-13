@@ -28,9 +28,5 @@ const pageData = await useFetchMainPage();
 </script>
 
 <style lang="scss" scoped>
-.main-container{
-  display:flex;
-  flex-direction: column;
-  justify-content: center;
-}
+
 </style>

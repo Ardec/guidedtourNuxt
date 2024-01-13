@@ -8,7 +8,7 @@
 </template>
 
 <script setup>
-const lang = await useFetchLang();
+const lang = useState('lang');
 const route = useRoute();
 const attrs = useAttrs();
 let items;
