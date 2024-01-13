@@ -25,8 +25,10 @@ const { data: assosiatedData } = useFetch(baseUrl + 'assosiated/sites', {
 });
 
 const getLanguage = () => {
-  useFetchLang().then((data) => {
-    lang.value = JSON.parse(data);
+  setTimeout(() => {
+    useFetchLang().then((data) => {
+      lang.value = data;
+    });
   });
 };
 </script>

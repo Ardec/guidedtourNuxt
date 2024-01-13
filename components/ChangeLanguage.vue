@@ -27,6 +27,8 @@ const selectedLang = ref(allLang[0]);
 const getSelectedLangFromLocalStorage = () => {
   if (process.client && localStorage.getItem('lang')) {
     selectedLang.value = JSON.parse(localStorage.getItem('lang'));
+  } else {
+    localStorage.setItem('lang', JSON.stringify(selectedLang.value));
   }
 };
 
