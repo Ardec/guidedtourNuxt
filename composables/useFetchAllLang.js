@@ -8,6 +8,5 @@ export default async () => {
             statusMessage: "Unable to fetch all lang"
         })
     }
-    console.log(data)
     return data.value.data.addresses;
 }
