@@ -6,7 +6,7 @@
     <PostsPictograms :items="activePictograms" />
   </div>
   <div class="main-container" v-if="images?.length > 0">
-      <Gallery :items="images"/>
+    <Gallery :items="images" />
   </div>
   <div
     v-if="item.extraDescription != '' && item.extraDescription != null && item.longDescriptionVisible != false"
@@ -28,7 +28,8 @@
 <script setup>
 const route = useRoute();
 const card = await useFetchCard(route.params.itemid);
-const lang = await useFetchLang();
+
+const lang = useState('lang');
 
 const item = card.value.data.visitingCard;
 

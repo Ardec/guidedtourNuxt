@@ -3,19 +3,19 @@
     v-if="!$attrs.item.ofcourceAlwaysOpen && check($attrs.item.openHours).name != ''"
     class="chip"
     :class="check($attrs.item.openHours).color">
-    {{ check($attrs.item.openHours).name }}
+    {{ translate(check($attrs.item.openHours)) }}
   </div>
   <div
     v-if="!$attrs.item.ofcourceAlwaysOpen && $attrs.item.openHours != '' && check($attrs.item.openHours).name == ''"
     class="chip red">
-    Zamknięte dzisia
+    Zamknięte dzisiaj
   </div>
 </template>
 
 <script setup>
-const attrs = useAttrs();
-const lang = attrs.lang;
 const translate = (zmienna) => {
+  const attrs = useAttrs();
+  const lang = attrs.lang;
   if (zmienna.name == 'Otwarte teraz' && lang.labelOpenNow != null) {
     zmienna.name = lang.labelOpenNow;
   }
@@ -31,7 +31,7 @@ const translate = (zmienna) => {
   if (zmienna.name.startsWith('Zamknięte, będzie otwarte') && lang.chipClosedWillBeOpen != null) {
     zmienna.name = zmienna.name.replace('Otwarte - za', lang.chipClosedWillBeOpen);
   }
-  return zmienna;
+  return zmienna.name;
 };
 
 const currentDay = () => {
@@ -129,7 +129,7 @@ const check = (zm) => {
     }
   });
 
-  return translate(zmienna);
+  return zmienna;
 };
 </script>
 
@@ -158,7 +158,7 @@ const check = (zm) => {
   }
 
   &.primary {
-    background:  #0f5694;
+    background: #0f5694;
   }
 }
 </style>
