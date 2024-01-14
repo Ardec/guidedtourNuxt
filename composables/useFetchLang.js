@@ -12,6 +12,7 @@ export default async () => {
           statusMessage: "Unable to fetch lang"
         })
       }
+      localStorage.setItem('lang', JSON.stringify(data.value.data.domesticLanguage));
       return data.value.data.domesticLanguage;
     }
   }

@@ -1,5 +1,6 @@
 <template>
   <ClientOnly>
+    {{ checkAcceptInfo() }}
     {{ getLanguage() }}
   </ClientOnly>
   <div class="main-container">
@@ -7,6 +8,7 @@
     <SideMenu :coreData="pageData.data" />
     <slot />
     <Footer :assosiatedData="assosiatedData.data" :ownerData="ownerData.data" />
+    <AcceptDialog :isOpen="showAcceptDialog" :lang="lang" @changeLang="changeLang" @closeDialog="closeDialog" />
   </div>
 </template>
 
@@ -24,12 +26,28 @@ const { data: assosiatedData } = useFetch(baseUrl + 'assosiated/sites', {
   lazy: true,
 });
 
+const showAcceptDialog = ref(false);
+
 const getLanguage = () => {
   setTimeout(() => {
     useFetchLang().then((data) => {
       lang.value = data;
     });
   });
+};
+
+const checkAcceptInfo = () => {
+  if (!localStorage.getItem('storagerights')) {
+    showAcceptDialog.value = true;
+  }
+};
+
+const changeLang = (data) => {
+  lang.value = data;
+};
+
+const closeDialog = () => {
+  showAcceptDialog.value = false;
 };
 </script>
 
