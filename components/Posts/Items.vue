@@ -90,7 +90,6 @@ await findPosts(filters);
 .wiz_container {
   display: flex;
   justify-content: center;
-  align-items: center;
   flex-wrap: wrap;
 }
 </style>
