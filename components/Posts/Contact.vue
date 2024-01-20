@@ -1,5 +1,5 @@
 <template>
-  <div v-if="$attrs.item.tag != ''">
+  <div v-if="$attrs.item.tag != ''" class="main-container">
     <h6 v-if="$attrs.lang.titleContact == null && $attrs.item != ''">Kontakt:</h6>
     <h6 v-else>{{ $attrs.lang.titleContact }}</h6>
     <div v-for="(tag, index) in activeTags" :key="tag.id" :title="`${tag.name} ${slice_prenounces(tag.url)}`">
