@@ -47,7 +47,10 @@ const { data: ownerData, execute } = useFetch(baseUrl + "owner/info", {
 
 <style lang="scss" scoped>
 .sections {
-  padding: 0px 10px;
+  padding:10px 10px;
+  margin-top:20px;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius:4px;
 }
 
 .section-title {
