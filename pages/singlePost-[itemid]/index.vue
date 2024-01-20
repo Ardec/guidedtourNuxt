@@ -5,13 +5,23 @@
   <div class="main-container">
     <PostsPictograms :items="activePictograms" />
   </div>
-  <div class="main-container" v-if="images?.length > 0">
-    <Gallery :items="images" />
-  </div>
   <div
-    v-if="item.extraDescription != '' && item.extraDescription != null && item.longDescriptionVisible != false"
-    class="card_text_container">
-    <div v-html="item.extraDescription"></div>
+    :class="{
+      'gallery-description':
+        item.extraDescription != '' && item.extraDescription != null && item.longDescriptionVisible != false &&  images?.length > 0
+    }">
+    <div class="main-container" v-if="images?.length > 0">
+      <Gallery :items="images" />
+    </div>
+    <div
+      v-if="item.extraDescription != '' && item.extraDescription != null && item.longDescriptionVisible != false"
+      class="card_text_container">
+      <UAccordion :items="accordionItems">
+        <template #item="{ i }">
+          <div v-html="item.extraDescription"></div>
+        </template>
+      </UAccordion>
+    </div>
   </div>
   <div class="main-container" v-if="connectedVisitingCards?.length > 0">
     <PostsConnectedCard :items="connectedVisitingCards" :lang="lang" />
@@ -45,6 +55,14 @@ const activePictograms = item?.pictograms?.map((item) => item.pictogram).filter(
 const connectedVisitingCards = item.connectedVisitingCards.map((item) => item.card);
 
 const images = item.gallery?.map((item) => item.image?.path);
+
+const accordionItems = [
+  {
+    label: lang.labelLongDescription == null ? 'Długi opis' : lang.labelLongDescription,
+    defaultOpen: true,
+    content: '',
+  },
+];
 </script>
 
 <style scoped lang="scss">
@@ -55,5 +73,16 @@ const images = item.gallery?.map((item) => item.image?.path);
 
 .card_text_container {
   word-wrap: break-word !important;
+}
+
+.gallery-description {
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+
+@media (max-width: 600px) {
+  .gallery-description {
+    display: block;
+  }
 }
 </style>
