@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="!$attrs.item.ofcourceAlwaysOpen && $attrs.item.openHours != '' && $attrs.item.openHoursVisible != false"
-    class="open-hours">
+    class="open-hours main-container">
     <h6 v-if="$attrs.lang?.titleOpenHours == null && $attrs.item != ''">Godziny otwarcia obiektu:</h6>
     <h6 v-else>{{ $attrs.lang?.titleOpenHours }}</h6>
     <p v-for="item3 in $attrs.item.openHours" :key="item3.id">

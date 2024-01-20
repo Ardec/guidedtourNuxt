@@ -8,7 +8,10 @@
   <div
     :class="{
       'gallery-description':
-        item.extraDescription != '' && item.extraDescription != null && item.longDescriptionVisible != false &&  images?.length > 0
+        item.extraDescription != '' &&
+        item.extraDescription != null &&
+        item.longDescriptionVisible != false &&
+        images?.length > 0,
     }">
     <div class="main-container" v-if="images?.length > 0">
       <Gallery :items="images" />
@@ -30,15 +33,15 @@
     <PostsConnectedCard :items="item.groups" :lang="lang" imageField="picture" type="group" />
   </div>
 
-  <div class="main-container">
-    <PostsContact :item="item" :lang="lang" />
-  </div>
-  <div class="main-container">
-    <PostsOpenHours :item="item" :lang="lang" />
-  </div>
-  <div class="main-container">
+  <PostsContact :item="item" :lang="lang" />
+
+  <PostsOpenHours :item="item" :lang="lang" />
+
+  <div class="main-container" v-if="item?.address?.length > 0">
     <PostsAddress :item="item" :lang="lang" :withTitle="true" />
   </div>
+
+  <PostsLocation :item="item" :lang="lang" />
 </template>
 
 <script setup>
@@ -84,5 +87,11 @@ const accordionItems = [
   .gallery-description {
     display: block;
   }
+}
+</style>
+
+<style lang="scss">
+.main-container {
+  padding: 16px;
 }
 </style>
