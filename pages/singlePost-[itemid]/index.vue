@@ -5,14 +5,18 @@
   <div class="main-container">
     <PostsPictograms :items="activePictograms" />
   </div>
-  <div class="gallery-description">
+  <div
+    :class="{
+      'gallery-description':
+        item.extraDescription != '' && item.extraDescription != null && item.longDescriptionVisible != false &&  images?.length > 0
+    }">
     <div class="main-container" v-if="images?.length > 0">
       <Gallery :items="images" />
     </div>
     <div
       v-if="item.extraDescription != '' && item.extraDescription != null && item.longDescriptionVisible != false"
       class="card_text_container">
-      <UAccordion :items="acccordionItems">
+      <UAccordion :items="accordionItems">
         <template #item="{ i }">
           <div v-html="item.extraDescription"></div>
         </template>
@@ -52,7 +56,7 @@ const connectedVisitingCards = item.connectedVisitingCards.map((item) => item.ca
 
 const images = item.gallery?.map((item) => item.image?.path);
 
-const acccordionItems = [
+const accordionItems = [
   {
     label: lang.labelLongDescription == null ? 'Długi opis' : lang.labelLongDescription,
     defaultOpen: true,
