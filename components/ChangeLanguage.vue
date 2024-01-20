@@ -35,6 +35,7 @@ const change = (item) => {
 };
 </script>
 <style lang="scss" scoped>
+img {border-radius:4px;}
 .lang-name {
   font-size: 18px;
   font-weight: 600;

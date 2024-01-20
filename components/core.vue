@@ -7,7 +7,13 @@
       </div>
       <div class="section-box">
         <div class="item" v-for="item in $attrs.coreData.categories" :key="item.id">
-          <NuxtLink to="/">
+          <NuxtLink :to="
+            item.searchEngine === '1' || item.searchEngine === 1 
+              ? `/buttonsPage/category-${item.id}/${item.name}`
+              : item.searchEngine === '2' || item.searchEngine === 2 
+              ? `/subcategorypage/category-${item.id}/${item.name}`
+              : `/postsPage/category-${item.id}/${item.name}`
+          ">
             <div class="image">
               <img
                 :src="baseUrl + item.image"
@@ -25,7 +31,7 @@
       </div>
       <div class="section-box">
         <div class="item" v-for="item in $attrs.coreData.promotions" :key="item.id">
-          <NuxtLink to="/">
+          <NuxtLink :to="`/singlePost-${item.id}`">
             <div class="image">
               <img
                 :src="baseUrl + item.image"
@@ -42,7 +48,7 @@
       <div class="section-title">Events</div>
       <div class="section-box">
         <div class="item" v-for="item in $attrs.coreData.events" :key="item.id">
-          <NuxtLink to="/">
+          <NuxtLink :to="`/singlePost-${item.id}`">
             <div class="image">
               <img
                 :src="baseUrl + item.image"
@@ -59,7 +65,7 @@
       <div class="section-title">Top Rated</div>
       <div class="section-box">
         <div class="item" v-for="item in $attrs.coreData.ratings" :key="item.id">
-          <NuxtLink to="/">
+          <NuxtLink :to="`/singlePost-${item.id}`">
             <div class="image">
               <img
                 :src="baseUrl + item.image"
@@ -118,6 +124,7 @@
       <div class="section-title">Sponsors</div>
       <div class="section-box">
         <div class="item" v-for="item in $attrs.coreData.sponsors" :key="item.id">
+          <!-- <NuxtLink v-if="item.mainPage == true" :to="item.url"> -->
           <NuxtLink v-if="item.mainPage == true" :to="item.url">
             <div class="image">
               <img
