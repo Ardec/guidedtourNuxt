@@ -1,6 +1,6 @@
 <template>
   <div class="main-container">
-   <FastSearch/>
+   <FastSearchCore/>
    <Core :coreData="pageData.data" />
     <ClientOnly>
       <!-- Adres mojego API z ENV: {{ baseUrl }}
