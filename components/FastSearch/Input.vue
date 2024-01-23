@@ -7,7 +7,7 @@
         @input="$emit('update:modelValue', $event.target.value)"
         @click="click"
         v-on:keyup.enter="change(modelValue)" />
-      <UIcon name="i-heroicons-magnifying-glass-16-solid" class="search-icon" />
+      <UIcon name="i-heroicons-magnifying-glass-16-solid" class="search-icon" @click="change(modelValue)"/>
     </div>
     <div class="divider"></div>
     <div class="suggests-list">
@@ -65,6 +65,7 @@ const change = (item) => {
     width: 30px;
     height: 30px;
     color: $accent;
+    cursor: pointer;
   }
 }
 
@@ -78,11 +79,12 @@ const change = (item) => {
   width: 100%;
   max-height: 300px;
   overflow-y: auto;
+  z-index: 1;
   .item {
-    margin: 1px 0;
     padding: 2px 4px;
-    background: #f7f8f9;
+    background: $backgorund;
     color: $accent;
+    border-bottom: 1px solid #e2e2e2;
     cursor: pointer;
   }
 }

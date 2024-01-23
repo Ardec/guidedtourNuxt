@@ -1,24 +1,29 @@
 <template>
   <FastSearchInput @click="openDialog" class="mb-8" />
-
-  <UModal v-model="isOpen" fullscreen>
-    <div class="main-container">
-      <div class="header">
-        <p class="title">Global search</p>
-        <UIcon name="i-heroicons-x-mark-16-solid" class="close-icon" @click="closeDialog" />
-      </div>
-      <FastSearchInput v-model="query" :items="suggests" @change="change" />
-      <FastSearchResultItems :items="results.categories" :title="'Categories'" :count="categoriesCount" />
-      <FastSearchResultItems :items="results.subcategories" :title="'Subcategories'" :count="subcategoriesCount" />
-      <FastSearchResultItems :items="results.buttons" :title="'Buttons'" :count="buttonsCount" />
-      <!-- <div class="clear">
-        <div class="divider"></div>
-        <div class="clear-button-container">
-          <UButton icon="i-heroicons-x-mark-16-solid" color="white" variant="solid" label="Clear" @click="clear"/>
+  <div class="transparent">
+    <UModal v-model="isOpen" fullscreen>
+      <div class="search-container">
+        <div class="header">
+          <p class="title">Global search</p>
+          <UIcon name="i-heroicons-x-mark-16-solid" class="close-icon" @click="closeDialog" />
         </div>
-      </div> -->
-    </div>
-  </UModal>
+        <FastSearchInput v-model="query" :items="suggests" @change="change" />
+        <div class="main-body">
+          <FastSearchResultItems :items="results.categories" :title="'Categories'" :count="categoriesCount" />
+          <FastSearchResultItems :items="results.subcategories" :title="'Subcategories'" :count="subcategoriesCount" />
+          <FastSearchResultItems :items="results.buttons" :title="'Buttons'" :count="buttonsCount" />
+        </div>
+        <div class="clear">
+          <div class="divider"></div>
+          <div class="clear-button-container">
+            <div class="clear-button" @click="clear">
+              <UIcon name="i-heroicons-x-mark-16-solid" class="clear-icon" />Clear
+            </div>
+          </div>
+        </div>
+      </div>
+    </UModal>
+  </div>
 </template>
 
 <script setup>
@@ -64,7 +69,7 @@ const change = (item) => {
 const clear = () => {
   query.value = '';
   results.value = [];
-}
+};
 
 watch(query, (newVal, oldVal) => {
   if (newVal?.length > 0) {
@@ -81,20 +86,22 @@ watch(query, (newVal, oldVal) => {
 });
 </script>
 
-<style lang="scss" scoped>
-.main-container {
-  position: relative;
-  font-family: 'Poppins';
-  color: #000;
-  padding: 50px 40px;
-  overflow-y: auto;
-  overflow-x: hidden;
+<style lang="scss">
+// .transparent,
+// div[role='dialog'] {
+//   div {
+//     background: transparent;
+//   }
+// }
+</style>
 
-  height: 100%;
-  min-height: 100%;
-  background: #e2e2e2;
+<style lang="scss" scoped>
+.search-container {
+  //background: rgba(226, 226, 226, 0.9) !important; //#e2e2e2;
   background: url('assets/img/background.png') no-repeat center center fixed, #e2e2e2;
   background-size: cover;
+  height: 100%;
+  padding: 50px 40px;
 
   .header {
     display: flex;
@@ -115,24 +122,48 @@ watch(query, (newVal, oldVal) => {
     color: $accent;
     position: absolute;
     right: 0;
+    cursor: pointer;
+  }
+}
+
+.main-body {
+  position: relative;
+  font-family: 'Poppins';
+  color: #000;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: calc(100% - 140px);
+}
+
+.clear {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  background: transparent;
+  width: 100%;
+
+  .divider {
+    border-bottom: 1px solid $accent;
+    height: 1px;
+    margin-bottom: 8px;
   }
 
-  .clear {
-    position: sticky;
-    bottom: -40px;
-    left: 0;
-    background: transparent;
-    width: 100%;
+  .clear-button-container {
+    display: flex;
+    justify-content: flex-end;
 
-    .divider {
-      border-bottom: 1px solid $accent;
-      height: 1px;
-      margin-bottom: 8px;
+    .clear-button {
+      background: #fff;
+      padding: 8px 16px;
+      display: flex;
+      color: rgba(91, 91, 96, 0.4);
+      cursor: pointer;
     }
 
-    .clear-button-container {
-      display: flex;
-      justify-content: flex-end;
+    .clear-icon {
+      width: 25px;
+      height: 25px;
+      color: $accent;
     }
   }
 }
