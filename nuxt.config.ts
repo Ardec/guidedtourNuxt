@@ -4,8 +4,13 @@ export default defineNuxtConfig({
 
   modules: [
     '@nuxt/ui',
-    'nuxt3-leaflet'
+    'nuxt3-leaflet',
+    '@dargmuesli/nuxt-cookie-control'
   ],
+
+  cookieControl: {
+    locales: ['en', 'pl'],
+  },
 
   runtimeConfig: {
     public: {
