@@ -69,13 +69,9 @@ const accordionItems = [
 </script>
 
 <style scoped lang="scss">
-.main-container,
-.card_text_container {
-  padding: 16px;
-}
-
 .card_text_container {
   word-wrap: break-word !important;
+    padding: 16px 0;
 }
 
 .gallery-description {
