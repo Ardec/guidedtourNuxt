@@ -92,6 +92,6 @@ const accordionItems = [
 
 <style lang="scss">
 .main-container {
-  padding: 16px;
+  padding: 16px 0;
 }
 </style>

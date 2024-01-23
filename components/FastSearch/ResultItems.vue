@@ -1,5 +1,5 @@
 <template>
-  <p class="results-title" v-if="$attrs.items?.length > 0">{{ $attrs.title }} - {{ $attrs.count }}</p>
+  <p class="results-title" v-if="$attrs.items?.length > 0">{{ $attrs.title }} - {{ $attrs.count }} results</p>
   <div v-for="parent in $attrs.items" :key="parent.id">
     <div v-for="item in parent.visitingCards" :key="item.id" class="result-item">
       <!-- <NuxtLink
@@ -10,11 +10,13 @@
             ? `/subcategorypage/${$attrs?.type}-${item.id}/${item.name}`
             : `/postsPage/${$attrs?.type}-${item.id}/${item.name}`
         "> -->
-        <span class="parent">{{ parent.name }}</span> >
+      <span class="parent">{{ parent.name }}</span> >
       <!-- </NuxtLink> -->
-      <span class="child">{{ item.name }}</span>
+      <NuxtLink :to="`/singlePost-${item.id}`">
+        <span class="child">{{ item.name }}</span>
+      </NuxtLink>
     </div>
-    <div v-if="parent.visitingCards?.length === 0">{{ parent.name }}</div>
+    <div v-if="parent.visitingCards?.length === 0" class="result-item">{{ parent.name }}</div>
   </div>
 </template>
 <style lang="scss" scoped>
