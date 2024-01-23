@@ -56,7 +56,7 @@ const { menuVisible, toggleMenu } = useGlobalState();
   align-items: center;
   justify-content: space-between;
   min-width: 300px;
-  padding: 10px;
+  padding: 10px 0;
 }
 .sub-title {
   text-align: center;
