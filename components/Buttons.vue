@@ -39,7 +39,7 @@
     display: flex;
     align-items: center;
     width: 100%;
-    padding: 8px 40px;
+    padding: 8px 0;
     justify-content: space-between;
     border-bottom: 1px dashed rgba(0, 0, 0, 0.2);
 
@@ -79,7 +79,7 @@
 .back-container {
   justify-content: flex-end;
   display: inline-flex;
-  padding: 8px;
+  padding: 8px 0;
   align-items: center;
   gap: 16px;
   width: 100%;

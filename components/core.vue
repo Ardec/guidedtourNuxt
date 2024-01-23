@@ -8,9 +8,9 @@
       <div class="section-box">
         <div class="item" v-for="item in $attrs.coreData.categories" :key="item.id">
           <NuxtLink :to="
-            item.searchEngine === '1' || item.searchEngine === 1 
+            item.searchEngine === 'ButtonPage'
               ? `/buttonsPage/category-${item.id}/${item.name}`
-              : item.searchEngine === '2' || item.searchEngine === 2 
+              : item.searchEngine === 'SubCategoryPage'
               ? `/subcategorypage/category-${item.id}/${item.name}`
               : `/postsPage/category-${item.id}/${item.name}`
           ">
