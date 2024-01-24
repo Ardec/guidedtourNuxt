@@ -6,6 +6,7 @@
   <div class="main-container">
     <TopBar v-if="ownerData != null" :ownerData="ownerData" :leftIcon="true" :rightIcon="false" />
     <SideMenu :coreData="pageData.data" />
+    <Breadcrumb/>
     <slot />
     <Footer :assosiatedData="assosiatedData.data" :ownerData="ownerData.data" />
     <AcceptDialog :isOpen="showAcceptDialog" :lang="lang" @changeLang="changeLang" @closeDialog="closeDialog" />

@@ -31,7 +31,7 @@
       </div>
       <div class="section-box">
         <div class="item" v-for="item in $attrs.coreData.promotions" :key="item.id">
-          <NuxtLink :to="`/singlePost-${item.id}`">
+          <NuxtLink :to="`/singlePost-${item.id}/${item.name}`">
             <div class="image">
               <img
                 :src="baseUrl + item.image"
@@ -48,7 +48,7 @@
       <div class="section-title">Events</div>
       <div class="section-box">
         <div class="item" v-for="item in $attrs.coreData.events" :key="item.id">
-          <NuxtLink :to="`/singlePost-${item.id}`">
+          <NuxtLink :to="`/singlePost-${item.id}/${item.name}`">
             <div class="image">
               <img
                 :src="baseUrl + item.image"
@@ -65,7 +65,7 @@
       <div class="section-title">Top Rated</div>
       <div class="section-box">
         <div class="item" v-for="item in $attrs.coreData.ratings" :key="item.id">
-          <NuxtLink :to="`/singlePost-${item.id}`">
+          <NuxtLink :to="`/singlePost-${item.id}/${item.name}`">
             <div class="image">
               <img
                 :src="baseUrl + item.image"
