@@ -5,5 +5,4 @@ export default defineNuxtRouteMiddleware((to, from) => {
   } else {
     addToHistory(to.params?.itemname ? to.params?.itemname : to.name ? to.name.toString()[0].toUpperCase() + to.name.toString().slice(1) : '', to.path)
   }
-  console.log("history", history.value)
 })
