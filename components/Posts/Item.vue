@@ -2,7 +2,7 @@
   <div class="wiz_box_container card_gradient">
     <PostsPictograms :items="activeFlags" />
     <div class="image-info">
-      <NuxtLink v-if="$attrs.item.isBig !== false" :to="'/singlePost-' + $attrs.item.id">
+      <NuxtLink v-if="$attrs.item.isBig !== false" :to="`/singlePost-${$attrs.item.id}/${$attrs.item.name}`">
       <img
         class="main-image"
         :src="

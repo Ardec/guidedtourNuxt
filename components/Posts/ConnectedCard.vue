@@ -11,7 +11,7 @@
   </div>
   <div class="card_container">
     <div v-for="item in $attrs?.items" :key="item.id">
-      <NuxtLink :to="$attrs.type ? `/postsPage/${$attrs?.type}-${item.id}/${item.name}` : `/singlePost-${item.id}`">
+      <NuxtLink :to="$attrs.type ? `/postsPage/${$attrs?.type}-${item.id}/${item.name}` : `/singlePost-${item.id}/${item.name}`">
         <div class="card_container_box">
           <div class="card">
             <img
