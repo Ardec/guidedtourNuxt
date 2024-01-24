@@ -75,3 +75,11 @@ watch(
   width: 100%;
 }
 </style>
+
+<style lang="scss">
+.cookieControl__BarButtons {
+  button:nth-child(3) {
+    display: none;
+  }
+}
+</style>

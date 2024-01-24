@@ -10,6 +10,7 @@ export default defineNuxtConfig({
 
   cookieControl: {
     locales: ['en', 'pl'],
+    isControlButtonEnabled: false,
   },
 
   runtimeConfig: {
