@@ -1,5 +1,14 @@
 <template>
-  <PostsFiltersTabs :filters="filters" :lang="lang" />
+  <PostsFiltersTabs
+    :filters="filters"
+    :tags="tags"
+    :lang="lang"
+    :isTimeFilterActive="true"
+    :isEventFilterActive="true"
+    :isStartEndFilterActive="true" />
+    <div class="results-count">
+      {{ filteredCount }} / {{ count }} {{ lang.chipSearchResults == null ? 'Wyników filtrowania' : lang.chipSearchResults }}
+    </div>
   <div class="wiz_container">
     <div v-for="item in items" :key="item.id">
       <PostsItem :item="item" :lang="lang" />
@@ -11,29 +20,24 @@
 const lang = useState('lang');
 const route = useRoute();
 const attrs = useAttrs();
-let items;
+const items = ref([]);
+const count = ref(0);
+const filteredCount = ref(0);
+const tags = ref([]);
 
 const filters = reactive({
-  name: '',
-  start: null,
-  end: null,
-  timeFilters: {
-    isActive: true,
-    now: false,
-    today: false,
-    tomorrow: false,
-    inSaturday: false,
-    inSunday: false,
-  },
-  eventFilters: {
-    isActive: true,
-    now: false,
-    today: false,
-    tomorrow: false,
-    inWeekend: false,
-    inThisMonth: false,
-    inNextMonth: false,
-  },
+  name: null,
+  isOpenNow: false,
+  isOpenToday: false,
+  isOpenTomorow: false,
+  isOpenSaturaday: false,
+  isOpenSunday: false,
+  promoOpenNow: false,
+  promoOpenToday: false,
+  promoOpenTomorow: false,
+  promoOpenThisWeek: false,
+  promoOpenThisMonth: false,
+  promoOpenNextMonth: false,
   startFilter: {
     date: undefined,
     time: undefined,
@@ -44,41 +48,58 @@ const filters = reactive({
   },
 });
 
-const findPosts = async (filters) => {
-  //FIXME use filters
-  if (attrs.from === 'category') {
-    const category = await useFetchCategory(route.params.itemid);
-    items = category?.value?.data?.category?.visitingCard
-      ?.map((item) => item.visitingCard)
-      .filter((item) => item.isActive !== false);
+const mapFilters = (filters) => {
+  let f = {
+    ...filters,
+    categoryId: attrs.from === 'category' ? route.params.itemid : null,
+    subCategoryId: attrs.from === 'subcategory' ? route.params.itemid : null,
+    buttonId: attrs.from === 'button' ? route.params.itemid : null,
+    groupId: attrs.from === 'group' ? route.params.itemid : null,
+  };
+  for (const [key, value] of Object.entries(f)) {
+    f[key] = value === false ? null : value;
   }
-  if (attrs.from === 'subcategory') {
-    const subcategory = await useFetchSubCategory(route.params.itemid);
-    items = subcategory?.value?.data?.subCategory?.visitingCard
-      ?.map((item) => item.visitingCard)
-      .filter((item) => item.isActive !== false);
+  if (filters.startFilter.date) {
+    f.startAt = filters.startFilter.date + (filters.startFilter.time ? ` ${filters.startFilter.time}` : '');
+  } else {
+    f.startAt = null;
   }
-  if (attrs.from === 'button') {
-    const button = await useFetchButton(route.params.itemid);
-    items = button?.value?.data?.button?.visitingCard
-      ?.map((item) => item.visitingCard)
-      .filter((item) => item.isActive !== false);
+  if (filters.endFilter.date) {
+    f.endAt = filters.endFilter.date + (filters.endFilter.time ? ` ${filters.endFilter.time}` : '');
+  } else {
+    f.endAt = null;
   }
-  if (attrs.from === 'group') {
-    const group = await useFetchGroup(route.params.itemid);
+  delete f.startFilter;
+  delete f.endFilter;
+  return f;
+};
 
-    items = group?.value?.data?.group?.visitingCards
-      ?.map((item) => item.visitingCard)
-      .filter((item) => item.isActive !== false);
+const mapTags = (tagsFromBe) => {
+  if (!tags.value?.length) {
+    tags.value = tagsFromBe?.map((t) => ({name: t.name, value: false}))
   }
+};
+
+const findPosts = async (filters, tags) => {
+  const cards = await useFetchFilteredCards(mapFilters(filters), tags);
+  items.value = cards?.value?.data?.filteredVisitingCards;
+  filteredCount.value = cards.value?.data?.filteredVisitingCardsCount;
+  count.value = cards.value?.data?.allVisitingCardsCount;
+  mapTags(cards.value?.data.restOfTagsData);
 };
 
 watch(
   filters,
   (newVal, oldVal) => {
-    console.log('Zmiana w obiekcie filters:', newVal);
-    // trigger endpoint with filters
-    // findPosts(newVal);
+    findPosts(newVal, tags);
+  },
+  { deep: true }
+);
+
+watch(
+  tags,
+  (newVal, oldVal) => {
+    findPosts(filters, newVal);
   },
   { deep: true }
 );
@@ -91,5 +112,11 @@ await findPosts(filters);
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+}
+
+.results-count {
+  background: $accent;
+  color: #fff;
+  padding: 2px 5px;
 }
 </style>
