@@ -3,12 +3,14 @@
     :filters="filters"
     :tags="tags"
     :lang="lang"
-    :isTimeFilterActive="true"
-    :isEventFilterActive="true"
-    :isStartEndFilterActive="true" />
-    <div class="results-count">
-      {{ filteredCount }} / {{ count }} {{ lang.chipSearchResults == null ? 'Wyników filtrowania' : lang.chipSearchResults }}
-    </div>
+    :localisationTags="localisationTags"
+    :restOfTags="restOfTags"
+    :isTimeFilterActive="isTimeFilterActive"
+    :isEventFilterActive="isEventFilterActive" />
+  <div class="results-count">
+    {{ filteredCount }} / {{ count }}
+    {{ lang.chipSearchResults == null ? 'Wyników filtrowania' : lang.chipSearchResults }}
+  </div>
   <div class="wiz_container">
     <div v-for="item in items" :key="item.id">
       <PostsItem :item="item" :lang="lang" />
@@ -23,7 +25,11 @@ const attrs = useAttrs();
 const items = ref([]);
 const count = ref(0);
 const filteredCount = ref(0);
-const tags = ref([]);
+const restOfTags = ref([]);
+const localisationTags = ref([]);
+
+const isTimeFilterActive = ref(false);
+const isEventFilterActive = ref(false);
 
 const filters = reactive({
   name: null,
@@ -74,32 +80,51 @@ const mapFilters = (filters) => {
   return f;
 };
 
-const mapTags = (tagsFromBe) => {
-  if (!tags.value?.length) {
-    tags.value = tagsFromBe?.map((t) => ({name: t.name, value: false}))
+const mapTags = (localisationTagsData, restOfTagsData) => {
+  if (restOfTags.value?.length === 0 && restOfTagsData?.length > 0) {
+    restOfTags.value = restOfTagsData?.map((t) => ({ name: t.name, value: false }));
+  }
+  if (localisationTags.value?.length === 0 && localisationTags?.length > 0) {
+    localisationTags.value = localisationTagsData?.map((t) => ({ name: t.name, value: false }));
   }
 };
 
-const findPosts = async (filters, tags) => {
-  const cards = await useFetchFilteredCards(mapFilters(filters), tags);
+const checkAvailabilityFilters = () => {
+  if (filteredCount.value === count.value) {
+    isTimeFilterActive.value = items.value.find((el) => el.openHours?.length > 0);
+    isEventFilterActive.value = items.value.find((el) => el.events?.length > 0);
+  }
+};
+
+const findPosts = async (filters, localisationTags, restOfTags) => {
+  const cards = await useFetchFilteredCards(mapFilters(filters), localisationTags, restOfTags);
   items.value = cards?.value?.data?.filteredVisitingCards;
   filteredCount.value = cards.value?.data?.filteredVisitingCardsCount;
   count.value = cards.value?.data?.allVisitingCardsCount;
-  mapTags(cards.value?.data.restOfTagsData);
+  mapTags(cards.value?.data.localisationTagsData, cards.value?.data.restOfTagsData);
+  checkAvailabilityFilters();
 };
 
 watch(
   filters,
   (newVal, oldVal) => {
-    findPosts(newVal, tags);
+    findPosts(newVal, localisationTags, restOfTags);
   },
   { deep: true }
 );
 
 watch(
-  tags,
+  localisationTags,
   (newVal, oldVal) => {
-    findPosts(filters, newVal);
+    findPosts(filters, newVal, restOfTags);
+  },
+  { deep: true }
+);
+
+watch(
+  restOfTags,
+  (newVal, oldVal) => {
+    findPosts(filters, localisationTags, newVal);
   },
   { deep: true }
 );

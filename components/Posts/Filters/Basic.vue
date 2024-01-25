@@ -59,7 +59,7 @@
         </div>
       </div>
     </div>
-    <div v-if="$attrs.isStartEndFilterActive" class="mt-3">
+    <div v-if="$attrs.isEventFilterActive" class="mt-3">
       <div>
         <span v-if="$attrs.lang.labelStartTime == null">Start date</span>
         <span v-else>{{ $attrs.lang.labelStartTime }}</span>

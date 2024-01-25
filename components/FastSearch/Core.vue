@@ -32,7 +32,7 @@ const isOpen = ref(false);
 const query = ref('');
 const suggests = ref([]);
 const results = ref([]);
-const categoriesCount = ref(1);
+const categoriesCount = ref(0);
 const subcategoriesCount = ref(0);
 const buttonsCount = ref(0);
 

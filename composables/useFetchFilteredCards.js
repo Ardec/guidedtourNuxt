@@ -1,4 +1,4 @@
-export default async (filters, tags) => {
+export default async (filters, localisationTags, restOfTags) => {
   const baseUrl = useBaseUrl();
   const { data, error } = await useFetch(`${baseUrl}filtered/visiting/card/`, {
     method: 'POST',
@@ -25,7 +25,8 @@ export default async (filters, tags) => {
       lattitude: null,
       longtitude: null,
       distance: null,
-      restofTags: tags?.filter((t => t.value)).map(t => t.name),
+      localisationTags: localisationTags && localisationTags.length > 0 ? localisationTags?.filter((t => t.value)).map(t => t.name) : [],
+      restofTags: restOfTags && restOfTags.length > 0 ? restOfTags?.filter((t => t.value)).map(t => t.name) : [],
       ...filters
     }
   })
