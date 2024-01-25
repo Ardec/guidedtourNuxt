@@ -60,7 +60,8 @@ const setCounts = () => {
 const change = (item) => {
   query.value = item;
   suggests.value = [];
-  useFetch(`${baseUrl}search/${item}`).then((response) => {
+  useFetch(`${baseUrl}search/`,
+  {method: 'POST', body: {name: item}}).then((response) => {
     results.value = response?.data?.value.data;
     setCounts();
   });
@@ -73,7 +74,8 @@ const clear = () => {
 
 watch(query, (newVal, oldVal) => {
   if (newVal?.length > 0) {
-    useFetch(`${baseUrl}search/suggests/${newVal}`).then((response) => {
+    useFetch(`${baseUrl}search/suggests/`,
+    {method: 'POST', body: {name: newVal}}).then((response) => {
       suggests.value = response?.data?.value.data.suggests;
 
       if (suggests.value.length === 1 && suggests.value[0] === query.value) {
