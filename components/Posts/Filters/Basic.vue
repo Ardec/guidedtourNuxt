@@ -3,63 +3,63 @@
     <div v-if="$attrs.lang.filterByCardName == null" class="text-h6">By Card name</div>
     <div v-else class="text-h6">{{ $attrs.lang.filterByCardName }}</div>
     <UInput v-model="filters.name" />
-    <div v-if="filters.timeFilters.isActive">
+    <div v-if="$attrs.isTimeFilterActive" class="mt-3">
       <span v-if="$attrs.lang.filterIsOpen == null">Is open</span>
       <span v-else>{{ $attrs.lang.filterIsOpen }}</span>
       <div class="toggle-container">
         <div class="toggle-item">
-          <UToggle v-model="filters.timeFilters.now" />
+          <UToggle v-model="filters.isOpenNow" />
           <div>{{ $attrs.lang.labelOpenNow == null ? 'Now' : $attrs.lang.labelOpenNow }}</div>
         </div>
         <div class="toggle-item">
-          <UToggle v-model="filters.timeFilters.today" />
+          <UToggle v-model="filters.isOpenToday" />
           <div>{{ $attrs.lang.labelOpenToday == null ? 'Today' : $attrs.lang.labelOpenToday }}</div>
         </div>
         <div class="toggle-item">
-          <UToggle v-model="filters.timeFilters.tomorrow" />
+          <UToggle v-model="filters.isOpenTomorow" />
           <div>{{ $attrs.lang.labelOpenTomorrow == null ? 'Tomorrow' : $attrs.lang.labelOpenTomorrow }}</div>
         </div>
         <div class="toggle-item">
-          <UToggle v-model="filters.timeFilters.inSaturday" />
+          <UToggle v-model="filters.isOpenSaturaday" />
           <div>{{ $attrs.lang.labelOpenInStaurday == null ? 'At Saturday' : $attrs.lang.labelOpenInStaurday }}</div>
         </div>
         <div class="toggle-item">
-          <UToggle v-model="filters.timeFilters.inSunday" />
+          <UToggle v-model="filters.isOpenSunday" />
           <div>{{ $attrs.lang.labelOpenInSunday == null ? 'At Sunday' : $attrs.lang.labelOpenInSunday }}</div>
         </div>
       </div>
     </div>
-    <div v-if="filters.eventFilters.isActive">
+    <div v-if="$attrs.isEventFilterActive" class="mt-3">
       <span v-if="$attrs.lang.filterIsPromotion == null">Is promotion</span>
       <span v-else>{{ $attrs.lang.filterIsPromotion }}</span>
       <div class="toggle-container">
         <div class="toggle-item">
-          <UToggle v-model="filters.eventFilters.now" />
+          <UToggle v-model="filters.promoOpenNow" />
           <div>{{ $attrs.lang.labelEventNow == null ? 'Now' : $attrs.lang.labelEventNow }}</div>
         </div>
         <div class="toggle-item">
-          <UToggle v-model="filters.eventFilters.today" />
+          <UToggle v-model="filters.promoOpenToday" />
           <div>{{ $attrs.lang.labelEventToday == null ? 'Today' : $attrs.lang.labelEventToday }}</div>
         </div>
         <div class="toggle-item">
-          <UToggle v-model="filters.eventFilters.tomorrow" />
+          <UToggle v-model="filters.promoOpenTomorow" />
           <div>{{ $attrs.lang.labelEventTomorrow == null ? 'Tomorrow' : $attrs.lang.labelEventTomorrow }}</div>
         </div>
         <div class="toggle-item">
-          <UToggle v-model="filters.eventFilters.inWeekend" />
+          <UToggle v-model="filters.promoOpenThisWeek" />
           <div>{{ $attrs.lang.labelEventNextWeekend == null ? 'In This Weekend' : $attrs.lang.labelEventNextWeekend }}</div>
         </div>
         <div class="toggle-item">
-          <UToggle v-model="filters.eventFilters.inThisMonth" />
+          <UToggle v-model="filters.promoOpenThisMonth" />
           <div>{{ $attrs.lang.labelEventThisMonth == null ? 'At Saturday' : $attrs.lang.labelEventThisMonth }}</div>
         </div>
         <div class="toggle-item">
-          <UToggle v-model="filters.eventFilters.inNextMonth" />
+          <UToggle v-model="filters.promoOpenNextMonth" />
           <div>{{ $attrs.lang.labelEventNextMonth == null ? 'At Sunday' : $attrs.lang.labelEventNextMonth }}</div>
         </div>
       </div>
     </div>
-    <div>
+    <div v-if="$attrs.isStartEndFilterActive" class="mt-3">
       <div>
         <span v-if="$attrs.lang.labelStartTime == null">Start date</span>
         <span v-else>{{ $attrs.lang.labelStartTime }}</span>
@@ -86,7 +86,7 @@ const filters = attrs.filters;
 <style scoped lang="scss">
 .main-container {
   background: rgba(255, 255, 255, 0.6);
-  padding: 5px;
+  padding: 15px;
   border-radius: 8px;
 }
 
