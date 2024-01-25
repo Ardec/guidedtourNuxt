@@ -9,9 +9,9 @@
         </div>
         <FastSearchInput v-model="query" :items="suggests" @change="change" />
         <div class="main-body">
-          <FastSearchResultItems :items="results.categories" :title="'Categories'" :count="categoriesCount" />
-          <FastSearchResultItems :items="results.subcategories" :title="'Subcategories'" :count="subcategoriesCount" />
-          <FastSearchResultItems :items="results.buttons" :title="'Buttons'" :count="buttonsCount" />
+          <FastSearchResultItems :items="results.categories" type="category" :count="categoriesCount" />
+          <FastSearchResultItems :items="results.subcategories" type="subcategory" :count="subcategoriesCount" />
+          <FastSearchResultItems :items="results.buttons" type="button" :count="buttonsCount" />
         </div>
         <div class="clear">
           <div class="divider"></div>
