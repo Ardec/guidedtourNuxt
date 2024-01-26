@@ -77,6 +77,7 @@ const accordionItems = [
 .gallery-description {
   display: grid;
   grid-template-columns: 50% 50%;
+  gap: 10px;
 }
 
 @media (max-width: 600px) {
