@@ -12,6 +12,11 @@
         :localisationTags="$attrs.localisationTags"
         :restOfTags="$attrs.restOfTags"
         :lang="$attrs.lang" />
+      <PostsFiltersMap
+        v-if="item.key === 'map'"
+        :lang="$attrs.lang"
+        :filters="$attrs.filters"
+        :items="$attrs.cardsItems" />
     </template>
   </UTabs>
 </template>
@@ -34,7 +39,7 @@ if (localisationTags?.length > 0 || restOfTags?.length > 0) {
   });
 }
 
-if (false) {
+if (attrs.isMapFilterActive) {
   tabsItems.push({
     label: 'Map',
     key: 'map',

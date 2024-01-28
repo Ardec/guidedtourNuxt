@@ -3,8 +3,10 @@
     :filters="filters"
     :tags="tags"
     :lang="lang"
+    :cardsItems="items"
     :localisationTags="localisationTags"
     :restOfTags="restOfTags"
+    :isMapFilterActive="isMapFilterActive"
     :isTimeFilterActive="isTimeFilterActive"
     :isEventFilterActive="isEventFilterActive" />
   <div class="results-count">
@@ -30,6 +32,7 @@ const localisationTags = ref([]);
 
 const isTimeFilterActive = ref(false);
 const isEventFilterActive = ref(false);
+const isMapFilterActive = ref(false);
 
 const filters = reactive({
   name: null,
@@ -44,6 +47,9 @@ const filters = reactive({
   promoOpenThisWeek: false,
   promoOpenThisMonth: false,
   promoOpenNextMonth: false,
+  lattitude: null,
+  longtitude: null,
+  distance: 0,
   startFilter: {
     date: undefined,
     time: undefined,
@@ -93,6 +99,7 @@ const checkAvailabilityFilters = () => {
   if (filteredCount.value === count.value) {
     isTimeFilterActive.value = items.value.find((el) => el.openHours?.length > 0);
     isEventFilterActive.value = items.value.find((el) => el.events?.length > 0);
+    isMapFilterActive.value = items.value.find((el) => !!el.longtitude && !!el.lattitude);
   }
 };
 
