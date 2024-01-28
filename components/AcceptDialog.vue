@@ -17,29 +17,39 @@
         {{ $attrs.lang?.welcomeSubText }}
       </p>
       <ChangeLanguage :lang="$attrs.lang" @changeLang="changeLang" />
-      <UButton
-        class="accept-button"
-        label="Akceptuję i wchodzę"
-        block
-        :disabled="!isEighteen || !acceptTerms"
-        @click="accept()" />
-      <UCheckbox
-        config.base="h-5 w-5"
-        class="accept-checkbox"
-        v-model="isEighteen"
-        label="Oświadczam, ze mam ukończone 18 lat." />
-      <UCheckbox class="accept-checkbox" v-model="acceptTerms" label="Akceptuję regulamin i politykę prywatności" />
+      <UButton class="accept-button" label="Akceptuję i wchodzę" block @click="accept()" />
+      <UBadge v-if="showHelpInfo">
+        Korzystanie z aplikacji wymaga ukończenia 18 lat i zaakceptowania regulaminu oraz
+      </UBadge>
+      <div :class="{'checkbox-red': showHelpInfo}">
+        <UCheckbox
+          required
+          config.base="h-5 w-5"
+          class="accept-checkbox"
+          v-model="isEighteen"
+          label="Oświadczam, ze mam ukończone 18 lat." />
+        <UCheckbox
+          class="accept-checkbox"
+          v-model="acceptTerms"
+          required
+          label="Akceptuję regulamin i politykę prywatności" />
+      </div>
     </div>
   </UModal>
 </template>
 <script setup>
 const isEighteen = ref(false);
 const acceptTerms = ref(false);
+const showHelpInfo = ref(false);
 const emit = defineEmits(['changeLang', 'closeDialog']);
 
 const accept = () => {
-  localStorage.setItem('storagerights', true);
-  emit('closeDialog')
+  if (!isEighteen.value || !acceptTerms.value) {
+    showHelpInfo.value = true;
+  } else {
+    localStorage.setItem('storagerights', true);
+    emit('closeDialog');
+  }
 };
 
 const changeLang = (item) => {
@@ -84,6 +94,7 @@ const changeLang = (item) => {
     margin-bottom: 25px;
   }
 }
+
 </style>
 <style lang="scss">
 .accept-checkbox {
@@ -91,6 +102,12 @@ const changeLang = (item) => {
   input {
     width: 25px;
     height: 25px;
+  }
+}
+
+.checkbox-red {
+  label {
+    color: red;
   }
 }
 </style>
