@@ -15,6 +15,7 @@
       <PostsFiltersMap
         v-if="item.key === 'map'"
         :lang="$attrs.lang"
+        :filters="$attrs.filters"
         :items="$attrs.cardsItems" />
     </template>
   </UTabs>

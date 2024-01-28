@@ -47,6 +47,9 @@ const filters = reactive({
   promoOpenThisWeek: false,
   promoOpenThisMonth: false,
   promoOpenNextMonth: false,
+  lattitude: null,
+  longtitude: null,
+  distance: 0,
   startFilter: {
     date: undefined,
     time: undefined,
