@@ -19,7 +19,7 @@
       <ChangeLanguage :lang="$attrs.lang" @changeLang="changeLang" />
       <UButton class="accept-button" label="Akceptuję i wchodzę" block @click="accept()" />
       <UBadge v-if="showHelpInfo">
-        Korzystanie z aplikacji wymaga ukończenia 18 lat i zaakceptowania regulaminu oraz
+        Korzystanie z aplikacji wymaga ukończenia 18 lat i zaakceptowania regulaminu
       </UBadge>
       <div :class="{'checkbox-red': showHelpInfo}">
         <UCheckbox
