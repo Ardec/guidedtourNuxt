@@ -17,8 +17,8 @@
           layer-type="base"
           name="OpenStreetMap" />
         <LMarker :lat-lng="center">
-          <LIcon :icon-anchor="staticAnchor" :icon-size="[48, 48]" class-name="someExtraClass flex-center">
-            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+          <LIcon :icon-anchor="staticAnchor" :icon-size="[28, 28]" class-name="someExtraClass flex-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 48 48">
               <path
                 fill="currentColor"
                 fill-rule="evenodd"

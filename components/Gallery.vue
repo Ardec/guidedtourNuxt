@@ -1,10 +1,10 @@
 <template>
-  <div class="section-box" v-if="$attrs.items?.length > 0">
+  <img v-if="bigPhotoUrl" class="big-photo" :src="baseUrl + bigPhotoUrl" onerror="this.onerror=null; this.src='assets/project.jpeg';" />
+   <div class="section-box" v-if="$attrs.items?.length > 0">
     <div class="image" v-for="item in $attrs.items" :key="item.id" @click="changePhoto(item)">
       <img :src="baseUrl + item" onerror="this.onerror=null; this.src='assets/project.jpeg';" />
     </div>
   </div>
-  <img v-if="bigPhotoUrl" class="big-photo" :src="baseUrl + bigPhotoUrl" onerror="this.onerror=null; this.src='assets/project.jpeg';" />
 </template>
 
 <script setup>

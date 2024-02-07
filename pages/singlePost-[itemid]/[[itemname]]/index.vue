@@ -1,4 +1,5 @@
 <template>
+
   <div class="main-container">
     <PostsPictograms :items="activeFlags" />
   </div>
@@ -19,11 +20,15 @@
     <div
       v-if="item.extraDescription != '' && item.extraDescription != null && item.longDescriptionVisible != false"
       class="card_text_container">
-      <UAccordion :items="accordionItems">
+      <div v-if="!readMoreText" v-html="item.slicedDescription"></div>
+      <div v-if="!readMoreText" @click="readMoreText = !readMoreText" class="read_more_button">Czytaj więcej </div>
+      <div v-if="readMoreText" v-html="item.extraDescription"></div>
+      <div v-if="readMoreText" @click="readMoreText = !readMoreText" class="read_more_button">Zwiń opis </div>
+      <!-- <UAccordion :items="accordionItems">
         <template #item="{ i }">
           <div v-html="item.extraDescription"></div>
         </template>
-      </UAccordion>
+      </UAccordion> -->
     </div>
   </div>
   <div class="main-container" v-if="connectedVisitingCards?.length > 0">
@@ -38,7 +43,7 @@
   <PostsOpenHours :item="item" :lang="lang" />
 
   <div class="main-container" v-if="item?.address?.length > 0">
-    <PostsAddress :item="item" :lang="lang" :withTitle="true" />
+  <PostsAddress :item="item" :lang="lang" :withTitle="true" />
   </div>
 
   <PostsLocation :item="item" :lang="lang" />
@@ -47,10 +52,12 @@
 <script setup>
 const route = useRoute();
 const card = await useFetchCard(route.params.itemid);
+const readMoreText = ref(false);
 
 const lang = useState('lang');
 
 const item = card.value.data.visitingCard;
+item.slicedDescription = (item.extraDescription.substr(0, 300))
 
 const activeFlags = item?.flag?.map((item) => item.flag).filter((item) => item.isActive);
 const activePictograms = item?.pictograms?.map((item) => item.pictogram).filter((item) => item.isActive);
@@ -59,13 +66,20 @@ const connectedVisitingCards = item.connectedVisitingCards.map((item) => item.ca
 
 const images = item.gallery?.map((item) => item.image?.path);
 
-const accordionItems = [
-  {
-    label: lang.labelLongDescription == null ? 'Długi opis' : lang.labelLongDescription,
-    defaultOpen: true,
-    content: '',
-  },
-];
+// const accordionItems = [
+//   {
+//     label: lang.labelLongDescription == null ? 'Czytaj więcej' : lang.labelLongDescription,
+//     defaultOpen: true,
+//     content: '',
+//   },
+// ];
+
+
+definePageMeta({
+  layout: 'withoutfooter'
+})
+
+
 </script>
 
 <style scoped lang="scss">
@@ -90,5 +104,16 @@ const accordionItems = [
 <style lang="scss">
 .main-container {
   padding: 16px 0;
+}
+
+.read_more_button{
+  cursor:pointer;
+  display:flex;
+  justify-content: center;
+  padding:20px;
+  border-radius:4px;
+  color:#f2a413;
+  font-size:1.2rem;
+  font-weight:bold;
 }
 </style>
