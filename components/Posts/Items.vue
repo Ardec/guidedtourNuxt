@@ -1,7 +1,6 @@
 <template>
   <PostsFiltersTabs
     :filters="filters"
-    :tags="tags"
     :lang="lang"
     :cardsItems="items"
     :localisationTags="localisationTags"
@@ -34,7 +33,7 @@ const isTimeFilterActive = ref(false);
 const isEventFilterActive = ref(false);
 const isMapFilterActive = ref(false);
 
-const filters = reactive({
+const filters = ref({
   name: null,
   isOpenNow: false,
   isOpenToday: false,
@@ -97,46 +96,90 @@ const mapTags = (localisationTagsData, restOfTagsData) => {
 
 const checkAvailabilityFilters = () => {
   if (filteredCount.value === count.value) {
-    isTimeFilterActive.value = items.value.find((el) => el.openHours?.length > 0);
-    isEventFilterActive.value = items.value.find((el) => el.events?.length > 0);
-    isMapFilterActive.value = items.value.find((el) => !!el.longtitude && !!el.lattitude);
+    isTimeFilterActive.value = items.value.some((el) => el.openHours?.length > 0);
+    isEventFilterActive.value = items.value.some((el) => el.events?.length > 0);
+    isMapFilterActive.value = items.value.some((el) => !!el.longtitude && !!el.lattitude);
   }
 };
 
-const findPosts = async (filters, localisationTags, restOfTags) => {
-  const cards = await useFetchFilteredCards(mapFilters(filters), localisationTags, restOfTags);
+const saveFiltersInCookie = (f, localisationTags, restOfTags) => {
+  const filtersCookie = useCookie('filters', {
+    default: () => {},
+    watch: true,
+  });
+  filtersCookie.value = {
+    filters: { ...f },
+    localisationTags: localisationTags || [],
+    restOfTags: restOfTags || [],
+  };
+};
+
+const checkFiltersInCookie = async () => {
+  const filtersCookie = useCookie('filters');
+  if (filtersCookie && filtersCookie.value) {
+    Object.assign(filters.value, filtersCookie.value.filters);
+    Object.assign(localisationTags.value, filtersCookie.value.localisationTag);
+    Object.assign(restOfTags.value, filtersCookie.value.restOfTags);
+    await findFilteredItems(
+      filtersCookie.value.filters,
+      filtersCookie.value.localisationTags,
+      filtersCookie.value.restOfTags
+    );
+  }
+
+  watch(
+    filters,
+    (newVal, oldVal) => {
+      findFilteredItemsAndSaveInCookie(newVal, localisationTags.value, restOfTags.value);
+    },
+    { deep: true }
+  );
+
+  watch(
+    localisationTags,
+    (newVal, oldVal) => {
+      findFilteredItemsAndSaveInCookie(filters.value, newVal, restOfTags.value);
+    },
+    { deep: true }
+  );
+
+  watch(
+    restOfTags,
+    (newVal, oldVal) => {
+      findFilteredItemsAndSaveInCookie(filters.value, localisationTags.value, newVal);
+    },
+    { deep: true }
+  );
+};
+
+const setItemsAndCounts = (cards) => {
   items.value = cards?.value?.data?.filteredVisitingCards;
   filteredCount.value = cards.value?.data?.filteredVisitingCardsCount;
   count.value = cards.value?.data?.allVisitingCardsCount;
+};
+
+const findAllPosts = async (filters) => {
+  const cards = await useFetchFilteredCards(mapFilters(filters));
+  setItemsAndCounts(cards);
   mapTags(cards.value?.data.localisationTagsData, cards.value?.data.restOfTagsData);
   checkAvailabilityFilters();
 };
 
-watch(
-  filters,
-  (newVal, oldVal) => {
-    findPosts(newVal, localisationTags, restOfTags);
-  },
-  { deep: true }
-);
+const findFilteredItemsAndSaveInCookie = async (filters, localisationTags, restOfTags) => {
+  saveFiltersInCookie(filters, localisationTags, restOfTags);
+  const cards = await useFetchFilteredCards(mapFilters(filters), localisationTags, restOfTags);
+  setItemsAndCounts(cards);
+};
 
-watch(
-  localisationTags,
-  (newVal, oldVal) => {
-    findPosts(filters, newVal, restOfTags);
-  },
-  { deep: true }
-);
+const findFilteredItems = async (filters, localisationTags, restOfTags) => {
+  const cards = await useFetchFilteredCards(mapFilters(filters), localisationTags, restOfTags);
+  setItemsAndCounts(cards);
+};
 
-watch(
-  restOfTags,
-  (newVal, oldVal) => {
-    findPosts(filters, localisationTags, newVal);
-  },
-  { deep: true }
-);
+//first call must be without filters from cookie to check availability of filters options
+await findAllPosts(filters.value);
 
-await findPosts(filters);
+await checkFiltersInCookie();
 </script>
 
 <style scoped lang="scss">

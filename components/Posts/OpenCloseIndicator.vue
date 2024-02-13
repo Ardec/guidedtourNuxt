@@ -74,7 +74,7 @@ const check = (zm) => {
     if (zm2.openHours.dayNumber == currentDay() && zm2.openHours.twentyFourHour == true) {
       zmienna.name = 'Otwarte dzisiaj';
       zmienna.color = 'green';
-      console.log('24/7', zm2.openHours, zmienna.name);
+      //console.log('24/7', zm2.openHours, zmienna.name);
     }
     if (
       zm2.openHours.dayNumber == currentDay() &&

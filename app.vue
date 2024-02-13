@@ -1,11 +1,18 @@
 <script setup>
-
-
+const setRemoveFiltersEvent = () => {
+  window.addEventListener('beforeunload', (event) => {
+    const filters = useCookie('filters');
+    if (filters) {
+      filters.value = null;
+    }
+  });
+};
 </script>
 
 <template>
+  <ClientOnly>{{ setRemoveFiltersEvent() }}</ClientOnly>
   <div class="app-container">
-     <NuxtLayout>
+    <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
     <!-- <img class="animate__animated animate__bounce logo-container" src="~/assets/img/kdev.png" alt="Discover Nuxt 3" />
@@ -14,38 +21,36 @@
 </template>
 
 <style lang="scss" scoped>
-
 body {
-    margin: 0;
-    padding: 16px; // Ustawienie paddingu na 16px
-    display: flex;
-    box-sizing: border-box;
-    min-width: 100vw; // Minimalna szerokość na 100% szerokości widoku
+  margin: 0;
+  padding: 16px; // Ustawienie paddingu na 16px
+  display: flex;
+  box-sizing: border-box;
+  min-width: 100vw; // Minimalna szerokość na 100% szerokości widoku
 }
 
 .logo-container {
-    display: flex;
-    justify-content: center; // Wyśrodkowanie w poziomie
-    align-items: center; // Wyśrodkowanie w pionie
+  display: flex;
+  justify-content: center; // Wyśrodkowanie w poziomie
+  align-items: center; // Wyśrodkowanie w pionie
 }
 
 .app-container {
-    display: flex;
-    flex-direction: column; // Elementy ułożone pionowo
-    justify-content: center; // Wyśrodkowanie w pionie
-    align-items: center; // Wyśrodkowanie w poziomie
-    height: 100%;
-    margin: 0 auto; // Automatyczne wyśrodkowanie poziome
-    padding: 0 16px; // Ustawienie paddingu poziomego na 16px
-    width: 100%; // Szerokość na 100%
-    max-width: 100vw; // Maksymalna szerokość na 100% szerokości widoku
+  display: flex;
+  flex-direction: column; // Elementy ułożone pionowo
+  justify-content: center; // Wyśrodkowanie w pionie
+  align-items: center; // Wyśrodkowanie w poziomie
+  height: 100%;
+  margin: 0 auto; // Automatyczne wyśrodkowanie poziome
+  padding: 0 16px; // Ustawienie paddingu poziomego na 16px
+  width: 100%; // Szerokość na 100%
+  max-width: 100vw; // Maksymalna szerokość na 100% szerokości widoku
 }
-
 </style>
 
 <style lang="scss">
 * {
-    box-sizing: border-box; // Ustawienie box-sizing na border-box dla wszystkich elementów
+  box-sizing: border-box; // Ustawienie box-sizing na border-box dla wszystkich elementów
 }
 
 body {
@@ -56,9 +61,9 @@ body {
 }
 
 h6 {
-    font-size: 1.25rem;
-    font-weight: 500;
-    letter-spacing: .0125em;
+  font-size: 1.25rem;
+  font-weight: 500;
+  letter-spacing: 0.0125em;
 }
 
 img {
