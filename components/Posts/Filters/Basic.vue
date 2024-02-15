@@ -9,23 +9,38 @@
       <div class="toggle-container">
         <div class="toggle-item">
           <UToggle v-model="filters.isOpenNow" />
-          <div>{{ $attrs.lang.labelOpenNow == null ? 'Now' : $attrs.lang.labelOpenNow }}</div>
+          <div>
+            {{ $attrs.lang.labelOpenNow == null ? 'Now' : $attrs.lang.labelOpenNow }}
+            <span>({{ $attrs?.filterCounts['isOpenNow'] }})</span>
+          </div>
         </div>
         <div class="toggle-item">
           <UToggle v-model="filters.isOpenToday" />
-          <div>{{ $attrs.lang.labelOpenToday == null ? 'Today' : $attrs.lang.labelOpenToday }}</div>
+          <div>
+            {{ $attrs.lang.labelOpenToday == null ? 'Today' : $attrs.lang.labelOpenToday }}
+            <span>({{ $attrs?.filterCounts['isOpenToday'] }})</span>
+          </div>
         </div>
         <div class="toggle-item">
           <UToggle v-model="filters.isOpenTomorow" />
-          <div>{{ $attrs.lang.labelOpenTomorrow == null ? 'Tomorrow' : $attrs.lang.labelOpenTomorrow }}</div>
+          <div>
+            {{ $attrs.lang.labelOpenTomorrow == null ? 'Tomorrow' : $attrs.lang.labelOpenTomorrow }}
+            <span>({{ $attrs?.filterCounts['isOpenTomorow'] }})</span>
+          </div>
         </div>
         <div class="toggle-item">
           <UToggle v-model="filters.isOpenSaturaday" />
-          <div>{{ $attrs.lang.labelOpenInStaurday == null ? 'At Saturday' : $attrs.lang.labelOpenInStaurday }}</div>
+          <div>
+            {{ $attrs.lang.labelOpenInStaurday == null ? 'At Saturday' : $attrs.lang.labelOpenInStaurday }}
+            <span>({{ $attrs?.filterCounts['isOpenSaturaday'] }})</span>
+          </div>
         </div>
         <div class="toggle-item">
           <UToggle v-model="filters.isOpenSunday" />
-          <div>{{ $attrs.lang.labelOpenInSunday == null ? 'At Sunday' : $attrs.lang.labelOpenInSunday }}</div>
+          <div>
+            {{ $attrs.lang.labelOpenInSunday == null ? 'At Sunday' : $attrs.lang.labelOpenInSunday }}
+            <span>({{ $attrs?.filterCounts['isOpenSunday'] }})</span>
+          </div>
         </div>
       </div>
     </div>
@@ -35,27 +50,45 @@
       <div class="toggle-container">
         <div class="toggle-item">
           <UToggle v-model="filters.promoOpenNow" />
-          <div>{{ $attrs.lang.labelEventNow == null ? 'Now' : $attrs.lang.labelEventNow }}</div>
+          <div>
+            {{ $attrs.lang.labelEventNow == null ? 'Now' : $attrs.lang.labelEventNow }}
+            <span>({{ $attrs?.filterCounts['promoOpenNow'] }})</span>
+          </div>
         </div>
         <div class="toggle-item">
           <UToggle v-model="filters.promoOpenToday" />
-          <div>{{ $attrs.lang.labelEventToday == null ? 'Today' : $attrs.lang.labelEventToday }}</div>
+          <div>
+            {{ $attrs.lang.labelEventToday == null ? 'Today' : $attrs.lang.labelEventToday }}
+            <span>({{ $attrs?.filterCounts['promoOpenToday'] }})</span>
+          </div>
         </div>
         <div class="toggle-item">
           <UToggle v-model="filters.promoOpenTomorow" />
-          <div>{{ $attrs.lang.labelEventTomorrow == null ? 'Tomorrow' : $attrs.lang.labelEventTomorrow }}</div>
+          <div>
+            {{ $attrs.lang.labelEventTomorrow == null ? 'Tomorrow' : $attrs.lang.labelEventTomorrow }}
+            <span>({{ $attrs?.filterCounts['promoOpenTomorow'] }})</span>
+          </div>
         </div>
         <div class="toggle-item">
           <UToggle v-model="filters.promoOpenThisWeek" />
-          <div>{{ $attrs.lang.labelEventNextWeekend == null ? 'In This Weekend' : $attrs.lang.labelEventNextWeekend }}</div>
+          <div>
+            {{ $attrs.lang.labelEventNextWeekend == null ? 'In This Weekend' : $attrs.lang.labelEventNextWeekend }}
+            <span>({{ $attrs?.filterCounts['promoOpenThisWeek'] }})</span>
+          </div>
         </div>
         <div class="toggle-item">
           <UToggle v-model="filters.promoOpenThisMonth" />
-          <div>{{ $attrs.lang.labelEventThisMonth == null ? 'At Saturday' : $attrs.lang.labelEventThisMonth }}</div>
+          <div>
+            {{ $attrs.lang.labelEventThisMonth == null ? 'At Saturday' : $attrs.lang.labelEventThisMonth }}
+            <span>({{ $attrs?.filterCounts['promoOpenThisMonth'] }})</span>
+          </div>
         </div>
         <div class="toggle-item">
           <UToggle v-model="filters.promoOpenNextMonth" />
-          <div>{{ $attrs.lang.labelEventNextMonth == null ? 'At Sunday' : $attrs.lang.labelEventNextMonth }}</div>
+          <div>
+            {{ $attrs.lang.labelEventNextMonth == null ? 'At Sunday' : $attrs.lang.labelEventNextMonth }}
+            <span>({{ $attrs?.filterCounts['promoOpenNextMonth'] }})</span>
+          </div>
         </div>
       </div>
     </div>

@@ -5,6 +5,7 @@
         v-if="item.key === 'basic'"
         :filters="$attrs.filters"
         :lang="$attrs.lang"
+        :filterCounts="$attrs.filterCounts"
         :isTimeFilterActive="$attrs.isTimeFilterActive"
         :isEventFilterActive="$attrs.isEventFilterActive" />
       <PostsFiltersTags
