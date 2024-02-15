@@ -6,6 +6,7 @@ export default async (filters, localisationTags, restOfTags) => {
       categoryId: null,
       subCategoryId: null,
       buttonId: null,
+      groupId: null,
       name: null,
       isOpenNow: null,
       isOpenToday: null,
