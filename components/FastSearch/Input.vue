@@ -79,7 +79,7 @@ const change = (item) => {
   width: 100%;
   max-height: 300px;
   overflow-y: auto;
-  z-index: 1;
+  z-index: 2;
   .item {
     padding: 2px 4px;
     background: $backgorund;

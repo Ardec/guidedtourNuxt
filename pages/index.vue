@@ -1,7 +1,7 @@
 <template>
   <div class="main-container">
-   <FastSearchCore/>
-   <Core :coreData="pageData.data" />
+   <FastSearchCore :lang="lang"/>
+   <Core :coreData="pageData.data"/>
     <ClientOnly>
       <!-- Adres mojego API z ENV: {{ baseUrl }}
       MenuVisiblesss {{ menuVisible }} -->
@@ -15,6 +15,8 @@
 <script setup>
 const baseUrl = useBaseUrl();
 const { menuVisible } = useGlobalState();
+
+const lang = useState('lang');
 
 const pageData = await useFetchMainPage();
 

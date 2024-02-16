@@ -8,6 +8,22 @@
           <UIcon name="i-heroicons-x-mark-16-solid" class="close-icon" @click="closeDialog" />
         </div>
         <FastSearchInput v-model="query" :items="suggests" @change="change" />
+        <UCheckbox v-model="allowEnabled" name="showMap" label="Dostępny" class="mt-2 mb-2" />
+
+        <div class="flex items-center">
+          <UCheckbox
+            v-model="allowDistance"
+            name="allowDistance"
+            :label="
+              $attrs.lang.filterUseDistanceFilter == null ? 'Use distance filter' : $attrs.lang.filterUseDistanceFilter
+            " />
+          <span class="distance" v-if="distance > 0">&nbsp;({{ parseFloat(distance / 1000).toFixed(1) }} km)</span>
+        </div>
+        <URange class="mt-2 mb-2" v-model="distance" name="distance" :min="0" :max="30000" />
+        <UBadge v-if="allowDistance && (!userCords[0] || !userCords[1])" class="mb-2">
+          Location access denied. Some features related to maps in this application may not work. Please check if your
+          device and browser allow geolocation.
+        </UBadge>
         <div class="main-body">
           <FastSearchResultItems :items="results.categories" type="category" :count="categoriesCount" />
           <FastSearchResultItems :items="results.subcategories" type="subcategory" :count="subcategoriesCount" />
@@ -35,6 +51,14 @@ const results = ref([]);
 const categoriesCount = ref(0);
 const subcategoriesCount = ref(0);
 const buttonsCount = ref(0);
+const distance = ref(0);
+const allowEnabled = ref(false);
+const allowDistance = ref(false);
+const userCords = ref([]);
+
+const setPosition = (position) => {
+  userCords.value = [position.coords?.latitude, position.coords?.longitude];
+};
 
 const openDialog = () => {
   results.value = [];
@@ -60,8 +84,14 @@ const setCounts = () => {
 const change = (item) => {
   query.value = item;
   suggests.value = [];
-  useFetch(`${baseUrl}search/`,
-  {method: 'POST', body: {name: item}}).then((response) => {
+  let payload = { name: item };
+  if (allowEnabled.value) {
+    payload.isEnable = true;
+  }
+  if (allowDistance.value && userCords.value[0] && userCords.value[1]) {
+    payload = { ...payload, latitude: userCords.value[0], longitude: userCords.value[1], distance: distance.value };
+  }
+  useFetch(`${baseUrl}search/`, { method: 'POST', body: payload }).then((response) => {
     results.value = response?.data?.value.data;
     setCounts();
   });
@@ -74,8 +104,7 @@ const clear = () => {
 
 watch(query, (newVal, oldVal) => {
   if (newVal?.length > 0) {
-    useFetch(`${baseUrl}search/suggests/`,
-    {method: 'POST', body: {name: newVal}}).then((response) => {
+    useFetch(`${baseUrl}search/suggests/`, { method: 'POST', body: { name: newVal } }).then((response) => {
       suggests.value = response?.data?.value.data.suggests;
 
       if (suggests.value.length === 1 && suggests.value[0] === query.value) {
@@ -84,6 +113,26 @@ watch(query, (newVal, oldVal) => {
     });
   } else {
     suggests.value = [];
+  }
+});
+
+watch(allowDistance, (newVal, oldVal) => {
+  console.log(allowDistance);
+  if (newVal && (!userCords.value[0] || !userCords.value[1])) {
+    console.log('ask for');
+    askForLocation(setPosition);
+  }
+});
+
+watch(distance, (newVal, oldVal) => {
+  if (query.value) {
+    change(query.value);
+  }
+});
+
+watch(allowEnabled, (newVal, oldVal) => {
+  if (query.value) {
+    change(query.value);
   }
 });
 </script>
@@ -168,5 +217,9 @@ watch(query, (newVal, oldVal) => {
       color: $accent;
     }
   }
+}
+
+.distance {
+  font-size: 0.85rem;
 }
 </style>

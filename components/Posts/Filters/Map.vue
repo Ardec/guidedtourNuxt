@@ -8,6 +8,7 @@
       name="showMap"
       :label="$attrs.lang.labelShowOnMap == null ? 'pokaz na mapie' : $attrs.lang.labelShowOnMap" />
     <UCheckbox
+      class="mb-2 mt-2"
       v-model="allowDistance"
       name="allowDistance"
       :label="
