@@ -7,7 +7,8 @@
     :restOfTags="restOfTags"
     :isMapFilterActive="isMapFilterActive"
     :isTimeFilterActive="isTimeFilterActive"
-    :isEventFilterActive="isEventFilterActive" />
+    :isEventFilterActive="isEventFilterActive"
+    :filterCounts="filterCounts" />
   <div class="results-count">
     {{ filteredCount }} / {{ count }}
     {{ lang.chipSearchResults == null ? 'Wyników filtrowania' : lang.chipSearchResults }}
@@ -28,6 +29,7 @@ const count = ref(0);
 const filteredCount = ref(0);
 const restOfTags = ref([]);
 const localisationTags = ref([]);
+const filterCounts = ref({});
 
 const isTimeFilterActive = ref(false);
 const isEventFilterActive = ref(false);
@@ -85,12 +87,20 @@ const mapFilters = (filters) => {
   return f;
 };
 
-const mapTags = (localisationTagsData, restOfTagsData) => {
+const mapTags = (localisationTagsData, restOfTagsData, filterCountsData) => {
   if (restOfTags.value?.length === 0 && restOfTagsData?.length > 0) {
-    restOfTags.value = restOfTagsData?.map((t) => ({ name: t.name, value: false }));
+    restOfTags.value = restOfTagsData?.map((t) => ({
+      name: t.name,
+      value: false,
+      count: filterCountsData?.restOfTags[t.name?.trim()],
+    }));
   }
   if (localisationTags.value?.length === 0 && localisationTags?.length > 0) {
-    localisationTags.value = localisationTagsData?.map((t) => ({ name: t.name, value: false }));
+    localisationTags.value = localisationTagsData?.map((t) => ({
+      name: t.name,
+      value: false,
+      count: filterCountsData?.localisationTags[t.name?.trim()],
+    }));
   }
 };
 
@@ -161,7 +171,8 @@ const setItemsAndCounts = (cards) => {
 const findAllPosts = async (filters) => {
   const cards = await useFetchFilteredCards(mapFilters(filters));
   setItemsAndCounts(cards);
-  mapTags(cards.value?.data.localisationTagsData, cards.value?.data.restOfTagsData);
+  mapTags(cards.value?.data.localisationTagsData, cards.value?.data.restOfTagsData, cards.value?.data.filterCounts);
+  filterCounts.value = cards.value?.data?.filterCounts;
   checkAvailabilityFilters();
 };
 
