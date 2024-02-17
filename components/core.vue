@@ -57,6 +57,21 @@
       </div>
     </div>
     <div class="section">
+      <div class="section-title">
+        <div class="title">Groups</div>
+      </div>
+      <div class="section-box">
+        <div class="item" v-for="item in $attrs.coreData.groups" :key="item.id">
+          <NuxtLink :to="`/postsPage/group-${item.id}/${item.name}`">
+            <div class="image">
+              <img :src="baseUrl + item.picture" onerror="this.onerror=null; this.src='assets/project.jpeg';" />
+            </div>
+            <div class="description">{{ item.name }}</div>
+          </NuxtLink>
+        </div>
+      </div>
+    </div>
+    <div class="section">
       <div class="section-title">Top Rated</div>
       <div class="section-box">
         <div class="item" v-for="item in $attrs.coreData.ratings" :key="item.id">
