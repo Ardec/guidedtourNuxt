@@ -1,6 +1,13 @@
 <template>
   <div class="topbar">
-    <div class="sub-title">{{$attrs.ownerData.data.ownerInfos[0].name}}</div>
+    <div class="flex justify-between w-full">
+      <div></div>
+      <div class="sub-title">{{$attrs.ownerData.data.ownerInfos[0].name}}</div>
+      <div>
+        <UIcon @click="zoomUp()" class="zoom" name="i-heroicons-magnifying-glass-plus-solid" style="font-size: 30px;"></UIcon>
+        <UIcon @click="zoomDown()"  class="zoom" name="i-heroicons-magnifying-glass-minus-solid" style="font-size: 30px;"></UIcon>
+      </div>
+    </div>
     <div class="title-container">
       <div  class="left-icon">
         <svg
@@ -47,6 +54,17 @@
 
 <script setup>
 const { menuVisible, toggleMenu } = useGlobalState();
+let zoom = 1;
+
+const zoomUp = () => {
+  zoom = zoom + 0.1;
+  document.body.style.zoom = zoom;
+}
+
+const zoomDown = () => {
+  zoom = zoom - 0.1;
+  document.body.style.zoom = zoom;
+}
 </script>
 
 <style lang="scss" scoped>
@@ -101,5 +119,9 @@ const { menuVisible, toggleMenu } = useGlobalState();
   font-weight: 400;
   line-height: 29px; /* 161.111% */
   align-self: start;
+}
+
+.zoom {
+  cursor: pointer;
 }
 </style>
