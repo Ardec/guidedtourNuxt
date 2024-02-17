@@ -16,6 +16,7 @@
 
 <script setup>
 const lang = useState('lang', () => ({}));
+const owner = useState('owner', () => ({}));
 
 const baseUrl = useBaseUrl();
 
@@ -24,6 +25,8 @@ const pageData = await useFetchMainPage();
 const { data: ownerData } = useFetch(baseUrl + 'owner/info', {
   lazy: true,
 });
+owner.value = ownerData?.value?.data?.ownerInfos[0];
+
 const { data: assosiatedData } = useFetch(baseUrl + 'assosiated/sites', {
   lazy: true,
 });

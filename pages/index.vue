@@ -1,6 +1,6 @@
 <template>
   <div class="main-container">
-   <FastSearchCore :lang="lang"/>
+   <FastSearchCore v-if="owner?.enableSearching !== false" :lang="lang"/>
    <Core :coreData="pageData.data"/>
     <ClientOnly>
       <!-- Adres mojego API z ENV: {{ baseUrl }}
@@ -17,6 +17,7 @@ const baseUrl = useBaseUrl();
 const { menuVisible } = useGlobalState();
 
 const lang = useState('lang');
+const owner = useState('owner');
 
 const pageData = await useFetchMainPage();
 
