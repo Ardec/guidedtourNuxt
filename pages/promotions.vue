@@ -3,11 +3,7 @@
     {{ count }}
     {{ lang.chipSearchResults == null ? 'Wyników wyszukiwania' : lang.chipSearchResults }}
   </div>
-  <div class="wiz_container">
-    <div v-for="item in items" :key="item.id">
-      <PostsItem :item="item" :lang="lang" />
-    </div>
-  </div>
+  <PostsItems :items="items"></PostsItems>
 </template>
 <script setup>
 const lang = useState('lang');
@@ -20,12 +16,6 @@ items.value = promotions.value.data.promotions;
 count.value = items.value.length;
 </script>
 <style scoped lang="scss">
-.wiz_container {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
 .results-count {
   background: $accent;
   color: #fff;

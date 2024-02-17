@@ -1,3 +1,3 @@
 <template>
-  <PostsItems from="button"/>
+  <PostsItemsAndFilters from="button"/>
 </template>
