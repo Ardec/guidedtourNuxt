@@ -27,7 +27,8 @@
     </div>
     <div class="section">
       <div class="section-title">
-        <div class="title">Promotions</div> 
+        <div class="title">Promotions</div>
+        <NuxtLink to="/promotions"><div class="all">all ></div></NuxtLink>
       </div>
       <div class="section-box">
         <div class="item" v-for="item in $attrs.coreData.promotions" :key="item.id">
