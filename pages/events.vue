@@ -10,9 +10,8 @@ const lang = useState('lang');
 const items = ref([]);
 const count = ref(0);
 
-const promotions = await useFetchPromotions();
-console.log(promotions);
-items.value = promotions.value.data.promotions;
+const events = await useFetchEvents();
+items.value = events.value.data.events;
 count.value = items.value.length;
 </script>
 <style scoped lang="scss">

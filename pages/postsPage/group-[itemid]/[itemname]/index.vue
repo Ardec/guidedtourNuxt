@@ -1,3 +1,3 @@
 <template>
-  <PostsItems from="group"/>
+  <PostsItemsAndFilters from="group"/>
 </template>

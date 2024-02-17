@@ -1,4 +1,4 @@
 
 <template>
-  <PostsItems from="category"/>
+  <PostsItemsAndFilters from="category"/>
 </template>
