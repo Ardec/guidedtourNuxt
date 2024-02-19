@@ -98,4 +98,13 @@ const slice_prenounces = (prenounce) => {
     margin-right: 5px;
   }
 }
+
+.dark {
+  .contact-content {
+    color: #fff;
+    a {
+      color: #fff;
+    }
+  }
+}
 </style>

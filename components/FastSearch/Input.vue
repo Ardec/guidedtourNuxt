@@ -109,4 +109,10 @@ const change = (item) => {
   border-radius: 2px; /* Zaokrąglenie krawędzi suwaka */
   min-height: 20px; /* Minimalna długość suwaka */
 }
+
+.dark {
+  .searcher {
+    background: $darkModeGray;
+  }
+}
 </style>

@@ -85,4 +85,10 @@ const { data: ownerData, execute } = useFetch(baseUrl + "owner/info", {
   font-weight: 600;
   line-height: 29px; /* 161.111% */
 }
+.dark {
+  .section-title,
+  .sub-title {
+    color: #fff;
+  }
+}
 </style>

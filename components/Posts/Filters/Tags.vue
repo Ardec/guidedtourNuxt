@@ -5,7 +5,8 @@
       <span v-else>{{ lang?.filterLocalisationTags }}</span>
       <div class="flex flex-wrap gap-x-5">
         <div class="flex gap-x-1" v-for="item of localisationTags" :key="item">
-          <UToggle v-model="item.value" />{{ item.name }} <span v-if="item.count || item.count === 0">({{ item.count }})</span>
+          <UToggle v-model="item.value" />{{ item.name }}
+          <span v-if="item.count || item.count === 0">({{ item.count }})</span>
         </div>
       </div>
     </div>
@@ -14,7 +15,8 @@
       <span v-else>{{ lang?.filterRestOfTags }}</span>
       <div class="flex flex-wrap gap-x-5">
         <div class="flex gap-x-1" v-for="item of restOfTags" :key="item">
-          <UToggle v-model="item.value" />{{ item.name }} <span v-if="item.count || item.count === 0">({{ item.count }})</span>
+          <UToggle v-model="item.value" />{{ item.name }}
+          <span v-if="item.count || item.count === 0">({{ item.count }})</span>
         </div>
       </div>
     </div>
@@ -31,4 +33,10 @@ const restOfTags = attrs.restOfTags;
   padding: 15px;
   border-radius: 8px;
 }
+.dark {
+  .tags-container {
+    background: rgb(38, 38, 38);
+  }
+}
+
 </style>
