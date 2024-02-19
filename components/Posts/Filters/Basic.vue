@@ -133,4 +133,10 @@ const filters = attrs.filters;
   display: flex;
   white-space: nowrap;
 }
+
+.dark {
+  .main-container {
+    background: rgb(38, 38, 38);
+  }
+}
 </style>

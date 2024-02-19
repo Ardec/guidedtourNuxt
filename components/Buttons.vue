@@ -114,4 +114,17 @@
     padding: 0px;
   }
 }
+
+.dark {
+  .button-type .button-container {
+    border-bottom: 1px dashed #fff;
+    .button-content {
+      color: #fff;
+    }
+  }
+  .head-text,
+  .back-text {
+    color: #fff;
+  }
+}
 </style>

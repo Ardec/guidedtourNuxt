@@ -1,11 +1,35 @@
 <template>
   <div class="topbar">
-    <div class="flex justify-between w-full">
+    <div class="header-container">
       <div></div>
       <div class="sub-title">{{$attrs.ownerData.data.ownerInfos[0].name}}</div>
-      <div>
-        <UIcon @click="zoomUp()" class="zoom" name="i-heroicons-magnifying-glass-plus-solid" style="font-size: 30px;"></UIcon>
-        <UIcon @click="zoomDown()"  class="zoom" name="i-heroicons-magnifying-glass-minus-solid" style="font-size: 30px;"></UIcon>
+      <div class="mode-buttons">
+        <UButton
+            :icon="'i-heroicons-magnifying-glass-plus-solid'"
+            color="gray"
+            variant="ghost"
+            aria-label="Theme"
+            @click="zoomUp()"
+          />
+          <UButton
+            :icon="'i-heroicons-magnifying-glass-minus-solid'"
+            color="gray"
+            variant="ghost"
+            aria-label="Theme"
+            @click="zoomDown()"
+          />
+        <ClientOnly>
+          <UButton
+            :icon="isDark ? 'i-heroicons-moon-20-solid' : 'i-heroicons-sun-20-solid'"
+            color="gray"
+            variant="ghost"
+            aria-label="Theme"
+            @click="isDark = !isDark"
+          />
+          <template #fallback>
+            <div class="w-8 h-8" />
+          </template>
+        </ClientOnly>
       </div>
     </div>
     <div class="title-container">
@@ -65,9 +89,29 @@ const zoomDown = () => {
   zoom = zoom - 0.1;
   document.body.style.zoom = zoom;
 }
+
+const colorMode = useColorMode()
+const isDark = computed({
+  get () {
+    return colorMode.value === 'dark'
+  },
+  set () {
+    colorMode.preference = colorMode.value === 'dark' ? 'light' : 'dark'
+  }
+})
 </script>
 
 <style lang="scss" scoped>
+.header-container {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  width: 100%;
+}
+
+.mode-buttons {
+  text-align: right;
+  width: 100%;
+}
 .topbar {
   display: flex;
   flex-direction: column;
@@ -119,9 +163,5 @@ const zoomDown = () => {
   font-weight: 400;
   line-height: 29px; /* 161.111% */
   align-self: start;
-}
-
-.zoom {
-  cursor: pointer;
 }
 </style>

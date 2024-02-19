@@ -3,14 +3,15 @@
     <PostsPictograms :items="activeFlags" />
     <div class="image-info">
       <NuxtLink v-if="$attrs.item.isBig !== false" :to="`/singlePost-${$attrs.item.id}/${$attrs.item.name}`">
-      <img
-        class="main-image"
-        :src="
-          $attrs.item.image == null || $attrs.item.image == '' ? '/assets/project.jpeg' : baseUrl + $attrs.item.image
-        "
-        onerror="this.onerror=null; this.src='assets/project.jpeg';" />
+        <img
+          class="main-image"
+          :src="
+            $attrs.item.image == null || $attrs.item.image == '' ? '/assets/project.jpeg' : baseUrl + $attrs.item.image
+          "
+          onerror="this.onerror=null; this.src='assets/project.jpeg';" />
       </NuxtLink>
-      <img v-if="$attrs.item.isBig === false" 
+      <img
+        v-if="$attrs.item.isBig === false"
         class="main-image"
         :src="
           $attrs.item.image == null || $attrs.item.image == '' ? '/assets/project.jpeg' : baseUrl + $attrs.item.image
@@ -20,7 +21,7 @@
         <p v-html="preserveNewlines($attrs.item.longDescription)" class="wiz_slogan"></p>
         <p v-html="preserveNewlines($attrs.item.name)" class="wiz_header"></p>
         <p v-html="preserveNewlines($attrs.item.shortDescription)" class="wiz_desc"></p>
-        <PostsOpenCloseIndicator :item="$attrs.item" :lang="$attrs.lang"/>
+        <PostsOpenCloseIndicator :item="$attrs.item" :lang="$attrs.lang" />
         <PostsPictograms :items="activePictograms" />
       </div>
     </div>
@@ -91,12 +92,21 @@ p.wiz_slogan {
   line-height: 0.8rem;
   color: #414141;
 }
-
 p.wiz_desc {
   padding: 2px 0px 2px 0px;
   margin: 0px 0px 0px 4px;
   font-size: 0.8rem;
   line-height: 0.8rem;
   color: #414141;
+}
+
+.dark {
+  p.wiz_slogan,
+  p.wiz_desc {
+    color: #fff;
+  }
+  .card_gradient {
+    background: rgb(38, 38, 38);
+  }
 }
 </style>

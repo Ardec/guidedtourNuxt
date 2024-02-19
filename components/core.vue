@@ -230,4 +230,11 @@ a {
   background: #000;
   box-shadow: 0px 1px 2px 0px rgba(105, 81, 255, 0.05);
 }
+
+.dark {
+  .section-title,
+  .description {
+    color: #fff;
+  }
+}
 </style>

@@ -73,7 +73,7 @@ const isVisible = ref(true);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  z-index: 100;
+  z-index: 9999;
 }
 
 .overlay-menu::before {
@@ -199,5 +199,19 @@ img {
   background: orange; /* Kolor suwaka paska przewijania */
   border-radius: 2px; /* Zaokrąglenie krawędzi suwaka */
   min-height: 20px; /* Minimalna długość suwaka */
+}
+
+.dark {
+  .overlay-menu {
+    background: #000;
+  }
+
+  .menu-item {
+    color: #fff;
+
+    &.active {
+      background: $darkModeGray;
+    }
+  }
 }
 </style>

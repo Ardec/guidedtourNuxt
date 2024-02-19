@@ -222,4 +222,21 @@ watch(allowEnabled, (newVal, oldVal) => {
 .distance {
   font-size: 0.85rem;
 }
+
+.dark {
+  .search-container {
+    background: none;
+  }
+  .main-body {
+    color: #fff;
+  }
+  .clear {
+    .clear-button-container {
+      .clear-button {
+        background: $darkModeGray;
+        color: #fff;
+      }
+    }
+  }
+}
 </style>

@@ -60,6 +60,12 @@ body {
   font-family: 'Inter', sans-serif; /* Zastosowanie czcionki Inter */
 }
 
+.dark {
+  body {
+    background: none;
+  }
+}
+
 h6 {
   font-size: 1.25rem;
   font-weight: 500;
