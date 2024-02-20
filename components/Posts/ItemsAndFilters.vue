@@ -84,14 +84,16 @@ const mapFilters = (filters) => {
 };
 
 const mapTags = (localisationTagsData, restOfTagsData, filterCountsData) => {
-  if (restOfTags.value?.length === 0 && restOfTagsData?.length > 0) {
+  restOfTags.value = [];
+  localisationTagsData.value = [];
+  if (restOfTagsData?.length > 0) {
     restOfTags.value = restOfTagsData?.map((t) => ({
       name: t.name,
       value: false,
       count: filterCountsData?.restOfTags[t.name?.trim()],
     }));
   }
-  if (localisationTags.value?.length === 0 && localisationTags?.length > 0) {
+  if (localisationTags?.length > 0) {
     localisationTags.value = localisationTagsData?.map((t) => ({
       name: t.name,
       value: false,
@@ -174,8 +176,7 @@ const findAllPosts = async (filters) => {
 
 const findFilteredItemsAndSaveInCookie = async (filters, localisationTags, restOfTags) => {
   saveFiltersInCookie(filters, localisationTags, restOfTags);
-  const cards = await useFetchFilteredCards(mapFilters(filters), localisationTags, restOfTags);
-  setItemsAndCounts(cards);
+  await findFilteredItems(filters, localisationTags, restOfTags);
 };
 
 const findFilteredItems = async (filters, localisationTags, restOfTags) => {
