@@ -76,12 +76,21 @@ const filters = attrs.filters;
 const showMap = ref(false);
 const allowDistance = ref(false);
 const showAllMarkerBoxes = ref(false);
-const distance = ref(0);
+const distance = ref(filters.distance ? filters.distance: 0);
 const attribution = '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors';
 const url = ref('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
 const zoom = ref(17);
 const markers = ref([]);
 let userCords;
+if(filters.lattitude && filters.longtitude) {
+  userCords = [filters.lattitude, filters.longtitude];
+
+  if(filters.distance > 0) {
+    showMap.value = true;
+    allowDistance.value = true;
+  }
+}
+
 let watchId;
 let geoPerm;
 let firstElWithGeo = attrs.items?.find((el) => !!el.longtitude && !!el.lattitude);
