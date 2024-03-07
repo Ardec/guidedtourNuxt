@@ -14,19 +14,19 @@ export default async (id) => {
      $fetch(`${baseUrl}visiting/card/${item.visitingCardId}`)
   );
 
-  const cardsResponse = await Promise.all(requestForConnectedCard);
+  const cardsResponse = await Promise.allSettled(requestForConnectedCard);
 
   cardsResponse?.forEach(connectedResponse => {
-    if (connectedResponse?.error?.value) {
-      throw createError({
-        ...connectedResponse.error.value,
-        statusMessage: "Unable to fetch connected card"
-      })
+    if (connectedResponse?.status === 'rejected') {
+      console.error(
+        connectedResponse.reason?.message,
+        "Unable to fetch connected card"
+      )
     } else {
       let el = data.value.data?.visitingCard?.connectedVisitingCards.find(
-        item => item.visitingCardId === connectedResponse.data.visitingCard.id)
+        item => item.visitingCardId === connectedResponse.value?.data?.visitingCard.id)
       if (el) {
-        el.card = connectedResponse.data.visitingCard;
+        el.card = connectedResponse.value?.data?.visitingCard;
       }
     }
   });
