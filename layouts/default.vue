@@ -8,7 +8,7 @@
     <SideMenu :coreData="pageData.data" />
     <Breadcrumb/>
     <slot />
-    <Footer :assosiatedData="assosiatedData?.data" :ownerData="ownerData.data" />
+    <Footer :assosiatedData="assosiatedData?.data" :ownerData="ownerData?.data" />
     <AcceptDialog :isOpen="showAcceptDialog" :lang="lang" @changeLang="changeLang" @closeDialog="closeDialog" />
     <CookieControl locale="pl" v-if="!showAcceptDialog" />
   </div>

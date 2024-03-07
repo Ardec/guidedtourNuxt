@@ -62,7 +62,7 @@ item.slicedDescription = (item.extraDescription?.substr(0, 300))
 const activeFlags = item?.flag?.map((item) => item.flag).filter((item) => item.isActive);
 const activePictograms = item?.pictograms?.map((item) => item.pictogram).filter((item) => item.isActive);
 
-const connectedVisitingCards = item.connectedVisitingCards.map((item) => item.card);
+const connectedVisitingCards = item.connectedVisitingCards.filter(item => item.card).map((item) => item.card);
 
 const images = item.gallery?.map((item) => item.image?.path);
 

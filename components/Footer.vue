@@ -9,12 +9,12 @@
     <div class="section">
       <div class="section-title">Management</div>
       <div class="section-description">
-        <b>{{ $attrs.ownerData.ownerInfos[0].name }}</b
+        <b>{{ $attrs.ownerData?.ownerInfos[0]?.name }}</b
         ><br />
-        {{ $attrs.ownerData.ownerInfos[0].shortDescription }} <br />
+        {{ $attrs.ownerData?.ownerInfos[0]?.shortDescription }} <br />
         <br />
-        {{ $attrs.ownerData.ownerInfos[0].phone }} <br />
-        {{ $attrs.ownerData.ownerInfos[0].email }} <br />
+        {{ $attrs.ownerData?.ownerInfos[0]?.phone }} <br />
+        {{ $attrs.ownerData?.ownerInfos[0]?.email }} <br />
       </div>
     </div>
     <div class="section">
