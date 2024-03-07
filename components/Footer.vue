@@ -3,7 +3,7 @@
     <div class="section">
       <div class="section-title"><div class="title">Featured sites</div></div>
       <div class="assosiated-container">
-        <div v-for="item in $attrs.assosiatedData.assosiatedSites" :key="item.id" class="assosiated-item"><NuxtLink :to="item.url">{{item.name}}</NuxtLink></div>
+        <div v-for="item in $attrs.assosiatedData?.assosiatedSites" :key="item.id" class="assosiated-item"><NuxtLink :to="item.url">{{item.name}}</NuxtLink></div>
       </div>
     </div>
     <div class="section">

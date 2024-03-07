@@ -81,6 +81,7 @@ const attribution = '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>
 const url = ref('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
 const zoom = ref(17);
 const markers = ref([]);
+const staticAnchor = [14, 26];
 let userCords;
 if(filters.lattitude && filters.longtitude) {
   userCords = [filters.lattitude, filters.longtitude];

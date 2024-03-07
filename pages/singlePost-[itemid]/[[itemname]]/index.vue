@@ -57,7 +57,7 @@ const readMoreText = ref(false);
 const lang = useState('lang');
 
 const item = card.value.data.visitingCard;
-item.slicedDescription = (item.extraDescription.substr(0, 300))
+item.slicedDescription = (item.extraDescription?.substr(0, 300))
 
 const activeFlags = item?.flag?.map((item) => item.flag).filter((item) => item.isActive);
 const activePictograms = item?.pictograms?.map((item) => item.pictogram).filter((item) => item.isActive);
