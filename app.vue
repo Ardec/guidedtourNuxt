@@ -1,6 +1,7 @@
 <script setup>
 const setRemoveFiltersEvent = () => {
   window.addEventListener('beforeunload', (event) => {
+    localStorage.removeItem('globalSearch');
     const filters = useCookie('filters');
     if (filters) {
       filters.value = null;

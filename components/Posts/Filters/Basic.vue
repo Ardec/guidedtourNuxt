@@ -97,7 +97,7 @@
         <span v-if="$attrs.lang.labelStartTime == null">Start date</span>
         <span v-else>{{ $attrs.lang.labelStartTime }}</span>
         <div>
-          <input type="date" v-model="filters.startFilter.date" />
+          <input type="date" v-model="filters.startFilter.date" :min="date.toISOString().split('T')[0]"/>
           <input type="time" v-model="filters.startFilter.time" />
         </div>
       </div>
@@ -105,7 +105,7 @@
         <span v-if="$attrs.lang.labelEndTime == null">End date</span>
         <span v-else>{{ $attrs.lang.labelEndTime }}</span>
         <div>
-          <input type="date" v-model="filters.endFilter.date" />
+          <input type="date" v-model="filters.endFilter.date" :min="date.toISOString().split('T')[0]"/>
           <input type="time" v-model="filters.endFilter.time" />
         </div>
       </div>
@@ -115,6 +115,7 @@
 <script setup>
 const attrs = useAttrs();
 const filters = attrs.filters;
+const date = ref(new Date());
 </script>
 <style scoped lang="scss">
 .main-container {

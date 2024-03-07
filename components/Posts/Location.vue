@@ -36,7 +36,7 @@ const zoom = ref(17);
 const url = ref('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
 const attribution = ref('&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors');
 const attrs = useAttrs();
-const staticAnchor = [24, 40];
+const staticAnchor = [14, 26];
 
 const center = [attrs.item?.lattitude, attrs.item?.longtitude];
 </script>

@@ -43,6 +43,7 @@
 </template>
 
 <script setup>
+const GLOBAL_SEARCH_KEY = 'globalSearch';
 const baseUrl = useBaseUrl();
 const isOpen = ref(false);
 const query = ref('');
@@ -55,18 +56,26 @@ const distance = ref(0);
 const allowEnabled = ref(false);
 const allowDistance = ref(false);
 const userCords = ref([]);
+const router = useRouter();
+const route = useRoute();
 
 const setPosition = (position) => {
   userCords.value = [position.coords?.latitude, position.coords?.longitude];
+  if (query.value) {
+    change(query.value);
+  }
 };
 
 const openDialog = () => {
   results.value = [];
   isOpen.value = true;
+  router.replace({ query: { globalSearch: true } });
+  checkLocalStorage();
 };
 const closeDialog = () => {
   isOpen.value = false;
   query.value = '';
+  router.replace({ query: {} });
 };
 const getCounts = (tab) => {
   return tab?.reduce(
@@ -94,6 +103,7 @@ const change = (item) => {
   useFetch(`${baseUrl}search/`, { method: 'POST', body: payload }).then((response) => {
     results.value = response?.data?.value.data;
     setCounts();
+    localStorage.setItem(GLOBAL_SEARCH_KEY, JSON.stringify({ ...payload, allowDistance: allowDistance.value }));
   });
 };
 
@@ -119,8 +129,11 @@ watch(query, (newVal, oldVal) => {
 watch(allowDistance, (newVal, oldVal) => {
   console.log(allowDistance);
   if (newVal && (!userCords.value[0] || !userCords.value[1])) {
-    console.log('ask for');
     askForLocation(setPosition);
+  } else {
+    if (query.value) {
+      change(query.value);
+    }
   }
 });
 
@@ -135,6 +148,26 @@ watch(allowEnabled, (newVal, oldVal) => {
     change(query.value);
   }
 });
+
+const checkLocalStorage = () => {
+  if (process.client) {
+    if (localStorage.getItem(GLOBAL_SEARCH_KEY)) {
+      const globalSearchFromStore = JSON.parse(localStorage.getItem(GLOBAL_SEARCH_KEY));
+      query.value = globalSearchFromStore.name;
+      allowEnabled.value = globalSearchFromStore.isEnable;
+      allowDistance.value = globalSearchFromStore.allowDistance;
+      if (globalSearchFromStore.latitude) {
+        userCords.value = [globalSearchFromStore.latitude, globalSearchFromStore.longitude];
+      }
+      distance.value = globalSearchFromStore.distance;
+      change(query.value);
+    }
+  }
+};
+
+if(route.query.globalSearch) {
+  openDialog();
+}
 </script>
 
 <style lang="scss">
