@@ -22,6 +22,7 @@
         <p v-html="preserveNewlines($attrs.item.name)" class="wiz_header"></p>
         <p v-html="preserveNewlines($attrs.item.shortDescription)" class="wiz_desc"></p>
         <PostsOpenCloseIndicator :item="$attrs.item" :lang="$attrs.lang" />
+        <PostsEventsIndicator :item="$attrs.item" :lang="$attrs.lang" />
         <PostsPictograms :items="activePictograms" />
       </div>
     </div>
