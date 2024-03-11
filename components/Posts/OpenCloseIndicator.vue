@@ -8,7 +8,7 @@
   <div
     v-if="!$attrs.item.ofcourceAlwaysOpen && $attrs.item.openHours != '' && check($attrs.item.openHours).name == ''"
     class="chip red">
-    Zamknięte dzisiaj
+    {{translate('Zamknięte dzisiaj')}}
   </div>
 </template>
 

@@ -14,7 +14,7 @@
       :label="
         $attrs.lang.filterUseDistanceFilter == null ? 'Use distance filter' : $attrs.lang.filterUseDistanceFilter
       " />
-    <UCheckbox v-model="showAllMarkerBoxes" name="showMap" label="Pokaż wszystkie dymki" />
+    <UCheckbox v-if="showMap" v-model="showAllMarkerBoxes" name="showMap" label="Pokaż wszystkie dymki" />
     {{ $attrs.lang.filterDistance == null ? 'distance filter (km)' : $attrs.lang.filterDistance }} ({{ distance }})
     <URange class="mt-2 mb-2" v-model="distance" name="distance" :min="0" :max="30" />
     <UBadge v-if="!geoPerm" class="mb-2">
@@ -30,32 +30,31 @@
           :zoomSnap="1.0"
           layer-type="base"
           name="OpenStreetMap" />
-        <LMarker
-          v-for="item in markers"
-          :key="item.id"
-          :lat-lng="[item.lattitude, item.longtitude]"
-          @click="showMarkerbox($event, item)">
-          <LIcon :icon-anchor="staticAnchor" :icon-size="[28, 28]" class-name="someExtraClass flex-center">
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 48 48">
-              <path
-                fill="#000"
-                fill-rule="evenodd"
-                d="M23.424 41.817L24 41zm1.152 0l.004-.002l.01-.007l.03-.023l.118-.085c.1-.074.246-.182.43-.324c.368-.282.89-.697 1.513-1.23a43.403 43.403 0 0 0 4.575-4.54C34.564 31.78 38 26.32 38 20.076c0-3.73-1.474-7.31-4.098-9.95A13.962 13.962 0 0 0 24 6a13.962 13.962 0 0 0-9.902 4.125A14.117 14.117 0 0 0 10 20.077c0 6.243 3.436 11.703 6.744 15.529a43.403 43.403 0 0 0 4.575 4.54c.624.533 1.145.948 1.513 1.23a25.536 25.536 0 0 0 .547.41l.032.022l.009.007l.004.002c.345.243.807.243 1.152 0M24 41l.576.817zm5-21a5 5 0 1 1-10 0a5 5 0 0 1 10 0"
-                clip-rule="evenodd" />
-            </svg>
-
-            <NuxtLink v-if="item.isBig !== false" :to="`/singlePost-${item.id}/${item.name}`">
-              <div class="markerbox headline flex inline q-ml-xs" :class="{ show_markerbox: showAllMarkerBoxes }">
-                {{ item.name }}
-                <br />
-                <br />
-                <span v-if="item.distance != NaN && item.distance != undefined && item.distance != null">{{
-                  (item.distance / 1000).toFixed(2) + ' km'
-                }}</span>
-              </div>
-            </NuxtLink>
-          </LIcon>
-        </LMarker>
+        <LFeatureGroup ref="markerGroup">
+          <LMarker v-for="item in markers" :key="item.id" :lat-lng="[item.lattitude, item.longtitude]">
+            <LIcon :icon-anchor="staticAnchor" :icon-size="[28, 28]" class-name="someExtraClass flex-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 48 48">
+                <path
+                  fill="#000"
+                  fill-rule="evenodd"
+                  d="M23.424 41.817L24 41zm1.152 0l.004-.002l.01-.007l.03-.023l.118-.085c.1-.074.246-.182.43-.324c.368-.282.89-.697 1.513-1.23a43.403 43.403 0 0 0 4.575-4.54C34.564 31.78 38 26.32 38 20.076c0-3.73-1.474-7.31-4.098-9.95A13.962 13.962 0 0 0 24 6a13.962 13.962 0 0 0-9.902 4.125A14.117 14.117 0 0 0 10 20.077c0 6.243 3.436 11.703 6.744 15.529a43.403 43.403 0 0 0 4.575 4.54c.624.533 1.145.948 1.513 1.23a25.536 25.536 0 0 0 .547.41l.032.022l.009.007l.004.002c.345.243.807.243 1.152 0M24 41l.576.817zm5-21a5 5 0 1 1-10 0a5 5 0 0 1 10 0"
+                  clip-rule="evenodd" />
+              </svg>
+            </LIcon>
+            <LPopup :options="popupOptions">
+              <NuxtLink v-if="item.isBig !== false" :to="`/singlePost-${item.id}/${item.name}`">
+                <div>
+                  {{ item.name }}
+                  <span v-if="item.distance != NaN && item.distance != undefined && item.distance != null">
+                    <br />
+                    <br />
+                    {{ (item.distance / 1000).toFixed(2) + ' km' }}</span
+                  >
+                </div>
+              </NuxtLink>
+            </LPopup>
+          </LMarker>
+        </LFeatureGroup>
         <LMarker v-if="userCords" :lat-lng="userCords">
           <LIcon :icon-anchor="staticAnchor" :icon-size="[48, 48]" class-name="someExtraClass flex-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 16 16">
@@ -76,21 +75,31 @@ const filters = attrs.filters;
 const showMap = ref(false);
 const allowDistance = ref(false);
 const showAllMarkerBoxes = ref(false);
-const distance = ref(filters.distance ? filters.distance: 0);
+const markerGroup = ref(null);
+const distance = ref(filters.distance ? filters.distance : 0);
 const attribution = '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors';
 const url = ref('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
 const zoom = ref(17);
 const markers = ref([]);
 const staticAnchor = [14, 26];
 let userCords;
-if(filters.lattitude && filters.longtitude) {
+if (filters.lattitude && filters.longtitude) {
   userCords = [filters.lattitude, filters.longtitude];
 
-  if(filters.distance > 0) {
+  if (filters.distance > 0) {
     showMap.value = true;
     allowDistance.value = true;
   }
 }
+
+const popupOptions = {
+  autoClose: false,
+  closeOnClick: false,
+  keepInView: false,
+  autoPan: false,
+  closeButton: false,
+  offset: [0, -5],
+};
 
 let watchId;
 let geoPerm;
@@ -148,17 +157,20 @@ const askForLocation = () => {
   }
 };
 
-const goToSinglePost = async (item) => {
-  await navigateTo(`/singlePost-${item.id}/${item.name}`);
-  // $router.push(`/singlePost-${item.id}/${item.name}`);
-};
-
-const showMarkerbox = (event, item) => {
-  event.originalEvent.srcElement.parentElement.parentElement.classList.toggle('show_markerbox');
-};
-
 watch(allowDistance, (newVal, oldVal) => {
   filters.distance = newVal ? distance : 0;
+});
+
+watch(showAllMarkerBoxes, (newVal, oldVal) => {
+  markerGroup.value.leafletObject.eachLayer((layer) => {
+    if (layer instanceof L.Marker) {
+      if (newVal) {
+        layer.openPopup();
+      } else {
+        layer.closePopup();
+      }
+    }
+  });
 });
 </script>
 <style scoped lang="scss">
@@ -169,34 +181,6 @@ watch(allowDistance, (newVal, oldVal) => {
     color: #000;
   }
 }
-
-.markerbox {
-  background-color: white;
-  border: solid black 1px;
-  border-radius: 6px;
-  padding: 4px;
-  font-size: 10px;
-  line-height: 10px;
-  width: 100px;
-  opacity: 0.73;
-}
-
-.markerbox:not(.show_markerbox) {
-  visibility: hidden;
-}
-
-.show_markerbox {
-  .markerbox {
-    visibility: visible;
-  }
-}
-
-.markerbox:hover {
-  cursor: pointer;
-  opacity: 1;
-  background-color: rgb(232, 232, 232);
-}
-
 .map-container {
   background: rgba(255, 255, 255, 0.6);
   padding: 15px;
@@ -205,6 +189,17 @@ watch(allowDistance, (newVal, oldVal) => {
 .dark {
   .map-container {
     background: rgb(38, 38, 38);
+  }
+}
+</style>
+<style lang="scss">
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  opacity: 0.73;
+
+  &:hover {
+    opacity: 1;
+    background: #e8e8e8;
   }
 }
 </style>
