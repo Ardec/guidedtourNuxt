@@ -33,10 +33,7 @@ export default async (filters, localisationTags, restOfTags) => {
   })
 
   if (error.value) {
-    throw createError({
-      ...error.value,
-      statusMessage: "Unable to fetch filtered cards"
-    })
+    throw createError({ statusCode: error.value.data?.status, statusMessage: `Unable to fetch filtered cards. ${error.value.data?.detail}` })
   }
 
   return data;

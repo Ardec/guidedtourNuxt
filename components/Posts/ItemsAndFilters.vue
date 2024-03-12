@@ -1,4 +1,5 @@
 <template>
+  <Alert v-if="error" :error="error"></Alert>
   <PostsFiltersTabs
     :filters="filters"
     :lang="lang"
@@ -31,6 +32,8 @@ const isTimeFilterActive = ref(false);
 const isEventFilterActive = ref(false);
 const isMapFilterActive = ref(false);
 
+const error = ref(null);
+
 const filters = ref({
   name: null,
   isOpenNow: false,
@@ -46,7 +49,7 @@ const filters = ref({
   promoOpenNextMonth: false,
   lattitude: null,
   longtitude: null,
-  distance: 0,
+  distance: null,
   startFilter: {
     date: undefined,
     time: undefined,
@@ -64,6 +67,7 @@ const mapFilters = (filters) => {
     subCategoryId: attrs.from === 'subcategory' ? route.params.itemid : null,
     buttonId: attrs.from === 'button' ? route.params.itemid : null,
     groupId: attrs.from === 'group' ? route.params.itemid : null,
+    type: attrs.from === 'promotion' ? 2 : attrs.from === 'events' ? 3 : null,
   };
   for (const [key, value] of Object.entries(f)) {
     f[key] = value === false ? null : value;
@@ -83,21 +87,19 @@ const mapFilters = (filters) => {
   return f;
 };
 
-const mapTags = (localisationTagsData, restOfTagsData, filterCountsData) => {
+const mapTags = (localisationTagsData, restOfTagsData) => {
   restOfTags.value = [];
-  localisationTagsData.value = [];
+  localisationTags.value = [];
   if (restOfTagsData?.length > 0) {
     restOfTags.value = restOfTagsData?.map((t) => ({
       name: t.name,
-      value: false,
-      count: filterCountsData?.restOfTags[t.name?.trim()],
+      value: false
     }));
   }
-  if (localisationTags?.length > 0) {
+  if (localisationTagsData?.length > 0) {
     localisationTags.value = localisationTagsData?.map((t) => ({
       name: t.name,
       value: false,
-      count: filterCountsData?.localisationTags[t.name?.trim()],
     }));
   }
 };
@@ -167,21 +169,34 @@ const setItemsAndCounts = (cards) => {
 };
 
 const findAllPosts = async (filters) => {
-  const cards = await useFetchFilteredCards(mapFilters(filters));
-  setItemsAndCounts(cards);
-  mapTags(cards.value?.data.localisationTagsData, cards.value?.data.restOfTagsData, cards.value?.data.filterCounts);
-  filterCounts.value = cards.value?.data?.filterCounts;
-  checkAvailabilityFilters();
+  try {
+    const cards = await useFetchFilteredCards(mapFilters(filters));
+    setItemsAndCounts(cards);
+    mapTags(cards.value?.data.localisationTagsData, cards.value?.data.restOfTagsData);
+    filterCounts.value = cards.value?.data?.filterCounts;
+    checkAvailabilityFilters();
+  } catch (err) {
+    error.value = err;
+  }
 };
 
 const findFilteredItemsAndSaveInCookie = async (filters, localisationTags, restOfTags) => {
+  try {
   saveFiltersInCookie(filters, localisationTags, restOfTags);
   await findFilteredItems(filters, localisationTags, restOfTags);
+  } catch (err) {
+    error.value = err;
+  }
 };
 
 const findFilteredItems = async (filters, localisationTags, restOfTags) => {
+  try {
   const cards = await useFetchFilteredCards(mapFilters(filters), localisationTags, restOfTags);
+  filterCounts.value = cards.value?.data?.filterCounts;
   setItemsAndCounts(cards);
+  } catch (err) {
+    error.value = err;
+  }
 };
 
 //first call must be without filters from cookie to check availability of filters options
