@@ -12,6 +12,7 @@
         v-if="item.key === 'tags'"
         :localisationTags="$attrs.localisationTags"
         :restOfTags="$attrs.restOfTags"
+        :filterCounts="$attrs.filterCounts"
         :lang="$attrs.lang" />
       <PostsFiltersMap
         v-if="item.key === 'map'"
