@@ -8,7 +8,11 @@
           <UToggle v-model="item.value" />{{ item.name }}
           <span
             >({{
-              $attrs.filterCounts['localisationTags'] ? $attrs.filterCounts['localisationTags'][item.name.trim()] : 0
+              $attrs.filterCounts['localisationTags'] &&
+              ($attrs.filterCounts['localisationTags'][item.name.trim()] ||
+                $attrs.filterCounts['localisationTags'][item.name.trim()] === 0)
+                ? $attrs.filterCounts['localisationTags'][item.name.trim()]
+                : $attrs.allFilteredCount
             }})</span
           >
         </div>
@@ -21,7 +25,13 @@
         <div class="flex gap-x-1" v-for="item of restOfTags" :key="item">
           <UToggle v-model="item.value" />{{ item.name }}
           <span
-            >({{ $attrs.filterCounts['restOfTags'] ? $attrs.filterCounts['restOfTags'][item.name.trim()] : 0 }})</span
+            >({{
+              $attrs.filterCounts['restOfTags'] &&
+              ($attrs.filterCounts['restOfTags'][item.name.trim()] ||
+                $attrs.filterCounts['restOfTags'][item.name.trim()] === 0)
+                ? $attrs.filterCounts['restOfTags'][item.name.trim()]
+                : $attrs.allFilteredCount
+            }})</span
           >
         </div>
       </div>

@@ -7,12 +7,14 @@
         :lang="$attrs.lang"
         :filterCounts="$attrs.filterCounts"
         :isTimeFilterActive="$attrs.isTimeFilterActive"
-        :isEventFilterActive="$attrs.isEventFilterActive" />
+        :isEventFilterActive="$attrs.isEventFilterActive"
+        :allFilteredCount="$attrs.allFilteredCount" />
       <PostsFiltersTags
         v-if="item.key === 'tags'"
         :localisationTags="$attrs.localisationTags"
         :restOfTags="$attrs.restOfTags"
         :filterCounts="$attrs.filterCounts"
+        :allFilteredCount="$attrs.allFilteredCount"
         :lang="$attrs.lang" />
       <PostsFiltersMap
         v-if="item.key === 'map'"

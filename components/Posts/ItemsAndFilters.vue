@@ -9,7 +9,8 @@
     :isMapFilterActive="isMapFilterActive"
     :isTimeFilterActive="isTimeFilterActive"
     :isEventFilterActive="isEventFilterActive"
-    :filterCounts="filterCounts" />
+    :filterCounts="filterCounts"
+    :allFilteredCount="filteredCount" />
   <div class="results-count">
     {{ filteredCount }} / {{ count }}
     {{ lang.chipSearchResults == null ? 'Wyników filtrowania' : lang.chipSearchResults }}
@@ -67,7 +68,7 @@ const mapFilters = (filters) => {
     subCategoryId: attrs.from === 'subcategory' ? route.params.itemid : null,
     buttonId: attrs.from === 'button' ? route.params.itemid : null,
     groupId: attrs.from === 'group' ? route.params.itemid : null,
-    type: attrs.from === 'promotion' ? 2 : attrs.from === 'events' ? 3 : null,
+    type: attrs.from === 'promotion' ? 3 : attrs.from === 'events' ? 2 : null,
   };
   for (const [key, value] of Object.entries(f)) {
     f[key] = value === false ? null : value;
