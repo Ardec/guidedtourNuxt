@@ -95,6 +95,13 @@ const changeLang = (item) => {
   }
 }
 
+.dark {
+  .main-container {
+    background: none;
+    color: #fff;
+  }
+}
+
 </style>
 <style lang="scss">
 .accept-checkbox {
