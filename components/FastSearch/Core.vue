@@ -5,13 +5,29 @@
       <div class="search-container">
         <div class="header">
           <p class="title">Global search</p>
-          <UIcon name="i-heroicons-x-mark-16-solid" class="close-icon" @click="closeDialog" />
+          <UIcon
+            name="i-heroicons-x-mark-16-solid"
+            class="close-icon"
+            @click="closeDialog"
+          />
         </div>
         <FastSearchInput v-model="query" :items="suggests" @change="change" />
         <div class="main-body">
-          <FastSearchResultItems :items="results.categories" type="category" :count="categoriesCount" />
-          <FastSearchResultItems :items="results.subcategories" type="subcategory" :count="subcategoriesCount" />
-          <FastSearchResultItems :items="results.buttons" type="button" :count="buttonsCount" />
+          <FastSearchResultItems
+            :items="results.categories"
+            type="category"
+            :count="categoriesCount"
+          />
+          <FastSearchResultItems
+            :items="results.subcategories"
+            type="subcategory"
+            :count="subcategoriesCount"
+          />
+          <FastSearchResultItems
+            :items="results.buttons"
+            type="button"
+            :count="buttonsCount"
+          />
         </div>
         <div class="clear">
           <div class="divider"></div>
@@ -29,7 +45,7 @@
 <script setup>
 const baseUrl = useBaseUrl();
 const isOpen = ref(false);
-const query = ref('');
+const query = ref("");
 const suggests = ref([]);
 const results = ref([]);
 const categoriesCount = ref(0);
@@ -42,11 +58,12 @@ const openDialog = () => {
 };
 const closeDialog = () => {
   isOpen.value = false;
-  query.value = '';
+  query.value = "";
 };
 const getCounts = (tab) => {
   return tab?.reduce(
-    (acc, currentV) => acc + (currentV.visitingCards.length > 0 ? currentV.visitingCards.length : 1),
+    (acc, currentV) =>
+      acc + (currentV.visitingCards.length > 0 ? currentV.visitingCards.length : 1),
     0
   );
 };
@@ -60,22 +77,25 @@ const setCounts = () => {
 const change = (item) => {
   query.value = item;
   suggests.value = [];
-  useFetch(`${baseUrl}search/`,
-  {method: 'POST', body: {name: item}}).then((response) => {
-    results.value = response?.data?.value.data;
-    setCounts();
-  });
+  useFetch(`${baseUrl}search/`, { method: "POST", body: { name: item } }).then(
+    (response) => {
+      results.value = response?.data?.value.data;
+      setCounts();
+    }
+  );
 };
 
 const clear = () => {
-  query.value = '';
+  query.value = "";
   results.value = [];
 };
 
 watch(query, (newVal, oldVal) => {
   if (newVal?.length > 0) {
-    useFetch(`${baseUrl}search/suggests/`,
-    {method: 'POST', body: {name: newVal}}).then((response) => {
+    useFetch(`${baseUrl}search/suggests/`, {
+      method: "POST",
+      body: { name: newVal },
+    }).then((response) => {
       suggests.value = response?.data?.value.data.suggests;
 
       if (suggests.value.length === 1 && suggests.value[0] === query.value) {
@@ -100,7 +120,7 @@ watch(query, (newVal, oldVal) => {
 <style lang="scss" scoped>
 .search-container {
   //background: rgba(226, 226, 226, 0.9) !important; //#e2e2e2;
-  background: url('assets/img/background.png') no-repeat center center fixed, #e2e2e2;
+  background: url("assets/img/background.png") no-repeat center center fixed, #e2e2e2;
   background-size: cover;
   height: 100%;
   padding: 50px 40px;
@@ -130,7 +150,7 @@ watch(query, (newVal, oldVal) => {
 
 .main-body {
   position: relative;
-  font-family: 'Poppins';
+  font-family: "Poppins";
   color: #000;
   overflow-y: auto;
   overflow-x: hidden;
@@ -138,6 +158,7 @@ watch(query, (newVal, oldVal) => {
 }
 
 .clear {
+  margin-top: 80px;
   position: sticky;
   bottom: 0;
   left: 0;
