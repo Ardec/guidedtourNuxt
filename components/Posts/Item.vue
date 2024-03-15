@@ -1,22 +1,32 @@
 <template>
   <div class="wiz_box_container card_gradient">
+    Piktogramy do filtrowania: {{ $attrs.item.flag }}
     <PostsPictograms :items="activeFlags" />
     <div class="image-info">
-      <NuxtLink v-if="$attrs.item.isBig !== false" :to="`/singlePost-${$attrs.item.id}/${$attrs.item.name}`">
+      <NuxtLink
+        v-if="$attrs.item.isBig !== false"
+        :to="`/singlePost-${$attrs.item.id}/${$attrs.item.name}`"
+      >
         <img
           class="main-image"
           :src="
-            $attrs.item.image == null || $attrs.item.image == '' ? '/assets/project.jpeg' : baseUrl + $attrs.item.image
+            $attrs.item.image == null || $attrs.item.image == ''
+              ? '/assets/project.jpeg'
+              : baseUrl + $attrs.item.image
           "
-          onerror="this.onerror=null; this.src='assets/project.jpeg';" />
+          onerror="this.onerror=null; this.src='assets/project.jpeg';"
+        />
       </NuxtLink>
       <img
         v-if="$attrs.item.isBig === false"
         class="main-image"
         :src="
-          $attrs.item.image == null || $attrs.item.image == '' ? '/assets/project.jpeg' : baseUrl + $attrs.item.image
+          $attrs.item.image == null || $attrs.item.image == ''
+            ? '/assets/project.jpeg'
+            : baseUrl + $attrs.item.image
         "
-        onerror="this.onerror=null; this.src='assets/project.jpeg';" />
+        onerror="this.onerror=null; this.src='assets/project.jpeg';"
+      />
       <div class="main-info">
         <p v-html="preserveNewlines($attrs.item.longDescription)" class="wiz_slogan"></p>
         <p v-html="preserveNewlines($attrs.item.name)" class="wiz_header"></p>
@@ -28,21 +38,28 @@
     </div>
     <PostsPictograms :items="activeTags" />
     <PostsAddress :item="$attrs.item" />
+    Przypisane godziny otwarcia: {{ $attrs.item.openHours }}
   </div>
 </template>
 
 <script setup>
 const baseUrl = useBaseUrl();
 const attrs = useAttrs();
-const activeFlags = attrs.item?.flag?.map((item) => item.flag).filter((item) => item.isActive);
-const activePictograms = attrs.item?.pictograms?.map((item) => item.pictogram).filter((item) => item.isActive);
-const activeTags = attrs.item?.tag?.map((item) => item.tag).filter((item) => item.isActive);
+const activeFlags = attrs.item?.flag
+  ?.map((item) => item.flag)
+  .filter((item) => item.isActive);
+const activePictograms = attrs.item?.pictograms
+  ?.map((item) => item.pictogram)
+  .filter((item) => item.isActive);
+const activeTags = attrs.item?.tag
+  ?.map((item) => item.tag)
+  .filter((item) => item.isActive);
 
 const preserveNewlines = (text) => {
-  if (text != null && text != undefined && text != '') {
-    return text.replace(/\n/g, '<br>');
+  if (text != null && text != undefined && text != "") {
+    return text.replace(/\n/g, "<br>");
   } else {
-    return '';
+    return "";
   }
 };
 </script>
