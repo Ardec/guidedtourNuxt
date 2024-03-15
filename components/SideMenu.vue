@@ -22,7 +22,7 @@
         <nav>
        <ul>
           <li><NuxtLink class="menu-item active" to="/" @click="toggleMenu">Home</NuxtLink></li>
-          <li><NuxtLink class="menu-item" to="/language">Change Language</NuxtLink></li>
+          <li><NuxtLink class="menu-item" to="/language" @click="toggleMenu">Change Language</NuxtLink></li>
         </ul>
     </nav>
     </div>

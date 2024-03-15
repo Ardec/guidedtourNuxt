@@ -225,6 +225,7 @@ if(route.query.globalSearch) {
   left: 0;
   background: transparent;
   width: 100%;
+  margin-top:100px;
 
   .divider {
     border-bottom: 1px solid $accent;
