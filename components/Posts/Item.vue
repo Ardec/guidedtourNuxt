@@ -1,6 +1,6 @@
 <template>
   <div class="wiz_box_container card_gradient">
-    Piktogramy do filtrowania: {{ $attrs.item.flag }}
+    <!-- Piktogramy do filtrowania: {{ $attrs.item.flag }} -->
     <PostsPictograms :items="activeFlags" />
     <div class="image-info">
       <NuxtLink
@@ -38,7 +38,7 @@
     </div>
     <PostsPictograms :items="activeTags" />
     <PostsAddress :item="$attrs.item" />
-    Przypisane godziny otwarcia: {{ $attrs.item.openHours }}
+    <!-- Przypisane godziny otwarcia: {{ $attrs.item.openHours }} -->
   </div>
 </template>
 
