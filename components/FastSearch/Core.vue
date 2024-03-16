@@ -5,29 +5,61 @@
       <div class="search-container">
         <div class="header">
           <p class="title">Global search</p>
-          <UIcon name="i-heroicons-x-mark-16-solid" class="close-icon" @click="closeDialog" />
+          <UIcon
+            name="i-heroicons-x-mark-16-solid"
+            class="close-icon"
+            @click="closeDialog"
+          />
         </div>
         <FastSearchInput v-model="query" :items="suggests" @change="change" />
-        <UCheckbox v-model="allowEnabled" name="showMap" label="Dostępny" class="mt-2 mb-2" />
+        <UCheckbox
+          v-model="allowEnabled"
+          name="showMap"
+          label="Dostępny"
+          class="mt-2 mb-2"
+        />
 
         <div class="flex items-center">
           <UCheckbox
             v-model="allowDistance"
             name="allowDistance"
             :label="
-              $attrs.lang.filterUseDistanceFilter == null ? 'Use distance filter' : $attrs.lang.filterUseDistanceFilter
-            " />
-          <span class="distance" v-if="distance > 0">&nbsp;({{ parseFloat(distance / 1000).toFixed(1) }} km)</span>
+              $attrs.lang.filterUseDistanceFilter == null
+                ? 'Use distance filter'
+                : $attrs.lang.filterUseDistanceFilter
+            "
+          />
+          <span class="distance" v-if="distance > 0"
+            >&nbsp;({{ parseFloat(distance / 1000).toFixed(1) }} km)</span
+          >
         </div>
-        <URange class="mt-2 mb-2" v-model="distance" name="distance" :min="0" :max="30000" />
+        <URange
+          class="mt-2 mb-2"
+          v-model="distance"
+          name="distance"
+          :min="0"
+          :max="30000"
+        />
         <UBadge v-if="allowDistance && (!userCords[0] || !userCords[1])" class="mb-2">
-          Location access denied. Some features related to maps in this application may not work. Please check if your
-          device and browser allow geolocation.
+          Location access denied. Some features related to maps in this application may
+          not work. Please check if your device and browser allow geolocation.
         </UBadge>
         <div class="main-body">
-          <FastSearchResultItems :items="results.categories" type="category" :count="categoriesCount" />
-          <FastSearchResultItems :items="results.subcategories" type="subcategory" :count="subcategoriesCount" />
-          <FastSearchResultItems :items="results.buttons" type="button" :count="buttonsCount" />
+          <FastSearchResultItems
+            :items="results.categories"
+            type="category"
+            :count="categoriesCount"
+          />
+          <FastSearchResultItems
+            :items="results.subcategories"
+            type="subcategory"
+            :count="subcategoriesCount"
+          />
+          <FastSearchResultItems
+            :items="results.buttons"
+            type="button"
+            :count="buttonsCount"
+          />
         </div>
         <div class="clear">
           <div class="divider"></div>
@@ -43,10 +75,10 @@
 </template>
 
 <script setup>
-const GLOBAL_SEARCH_KEY = 'globalSearch';
+const GLOBAL_SEARCH_KEY = "globalSearch";
 const baseUrl = useBaseUrl();
 const isOpen = ref(false);
-const query = ref('');
+const query = ref("");
 const suggests = ref([]);
 const results = ref([]);
 const categoriesCount = ref(0);
@@ -74,12 +106,13 @@ const openDialog = () => {
 };
 const closeDialog = () => {
   isOpen.value = false;
-  query.value = '';
+  query.value = "";
   router.replace({ query: {} });
 };
 const getCounts = (tab) => {
   return tab?.reduce(
-    (acc, currentV) => acc + (currentV.visitingCards.length > 0 ? currentV.visitingCards.length : 1),
+    (acc, currentV) =>
+      acc + (currentV.visitingCards.length > 0 ? currentV.visitingCards.length : 1),
     0
   );
 };
@@ -98,23 +131,34 @@ const change = (item) => {
     payload.isEnable = true;
   }
   if (allowDistance.value && userCords.value[0] && userCords.value[1]) {
-    payload = { ...payload, latitude: userCords.value[0], longitude: userCords.value[1], distance: distance.value };
+    payload = {
+      ...payload,
+      latitude: userCords.value[0],
+      longitude: userCords.value[1],
+      distance: distance.value,
+    };
   }
-  useFetch(`${baseUrl}search/`, { method: 'POST', body: payload }).then((response) => {
+  useFetch(`${baseUrl}search/`, { method: "POST", body: payload }).then((response) => {
     results.value = response?.data?.value.data;
     setCounts();
-    localStorage.setItem(GLOBAL_SEARCH_KEY, JSON.stringify({ ...payload, allowDistance: allowDistance.value }));
+    localStorage.setItem(
+      GLOBAL_SEARCH_KEY,
+      JSON.stringify({ ...payload, allowDistance: allowDistance.value })
+    );
   });
 };
 
 const clear = () => {
-  query.value = '';
+  query.value = "";
   results.value = [];
 };
 
 watch(query, (newVal, oldVal) => {
   if (newVal?.length > 0) {
-    useFetch(`${baseUrl}search/suggests/`, { method: 'POST', body: { name: newVal } }).then((response) => {
+    useFetch(`${baseUrl}search/suggests/`, {
+      method: "POST",
+      body: { name: newVal },
+    }).then((response) => {
       suggests.value = response?.data?.value.data.suggests;
 
       if (suggests.value.length === 1 && suggests.value[0] === query.value) {
@@ -157,7 +201,10 @@ const checkLocalStorage = () => {
       allowEnabled.value = globalSearchFromStore.isEnable;
       allowDistance.value = globalSearchFromStore.allowDistance;
       if (globalSearchFromStore.latitude) {
-        userCords.value = [globalSearchFromStore.latitude, globalSearchFromStore.longitude];
+        userCords.value = [
+          globalSearchFromStore.latitude,
+          globalSearchFromStore.longitude,
+        ];
       }
       distance.value = globalSearchFromStore.distance;
       change(query.value);
@@ -165,7 +212,7 @@ const checkLocalStorage = () => {
   }
 };
 
-if(route.query.globalSearch) {
+if (route.query.globalSearch) {
   openDialog();
 }
 </script>
@@ -184,10 +231,11 @@ if(route.query.globalSearch) {
 <style lang="scss" scoped>
 .search-container {
   //background: rgba(226, 226, 226, 0.9) !important; //#e2e2e2;
-  background: url('assets/img/background.png') no-repeat center center fixed, #e2e2e2;
+  background: url("assets/img/background.png") no-repeat center center fixed, #e2e2e2;
   background-size: cover;
   height: 100%;
   padding: 50px 40px;
+  padding-bottom: 150px;
 
   .header {
     display: flex;
@@ -214,7 +262,7 @@ if(route.query.globalSearch) {
 
 .main-body {
   position: relative;
-  font-family: 'Poppins';
+  font-family: "Poppins";
   color: #000;
   overflow-y: auto;
   overflow-x: hidden;
@@ -227,7 +275,7 @@ if(route.query.globalSearch) {
   left: 0;
   background: transparent;
   width: 100%;
-  margin-top:100px;
+  margin-top: 200px;
 
   .divider {
     border-bottom: 1px solid $accent;
