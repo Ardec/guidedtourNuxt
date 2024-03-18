@@ -1,5 +1,4 @@
 <template>
-
   <div class="main-container">
     <PostsPictograms :items="activeFlags" />
   </div>
@@ -20,10 +19,9 @@
     <div
       v-if="item.extraDescription != '' && item.extraDescription != null && item.longDescriptionVisible != false"
       class="card_text_container">
-      <div v-if="!readMoreText" v-html="item.slicedDescription"></div>
-      <div v-if="!readMoreText" @click="readMoreText = !readMoreText" class="read_more_button">Czytaj więcej </div>
-      <div v-if="readMoreText" v-html="item.extraDescription"></div>
-      <div v-if="readMoreText" @click="readMoreText = !readMoreText" class="read_more_button">Zwiń opis </div>
+      <div ref="descriptionContainer" :class="{ 'shortened-container': !readMoreText && isToggleDescriptionNeeded }" v-html="item.extraDescription"></div>
+      <div v-if="!readMoreText && isToggleDescriptionNeeded" @click="readMoreText = !readMoreText" class="read_more_button">Czytaj więcej</div>
+      <div v-if="readMoreText && isToggleDescriptionNeeded" @click="readMoreText = !readMoreText" class="read_more_button">Zwiń opis</div>
       <!-- <UAccordion :items="accordionItems">
         <template #item="{ i }">
           <div v-html="item.extraDescription"></div>
@@ -43,7 +41,7 @@
   <PostsOpenHours :item="item" :lang="lang" />
 
   <div class="main-container" v-if="item?.address?.length > 0">
-  <PostsAddress :item="item" :lang="lang" :withTitle="true" />
+    <PostsAddress :item="item" :lang="lang" :withTitle="true" />
   </div>
 
   <PostsLocation :item="item" :lang="lang" />
@@ -53,16 +51,17 @@
 const route = useRoute();
 const card = await useFetchCard(route.params.itemid);
 const readMoreText = ref(false);
+const descriptionContainer = ref(null);
+const isToggleDescriptionNeeded = ref(false);
 
 const lang = useState('lang');
 
 const item = card.value.data.visitingCard;
-item.slicedDescription = (item.extraDescription?.substr(0, 3000))
 
 const activeFlags = item?.flag?.map((item) => item.flag).filter((item) => item.isActive);
 const activePictograms = item?.pictograms?.map((item) => item.pictogram).filter((item) => item.isActive);
 
-const connectedVisitingCards = item.connectedVisitingCards.filter(item => item.card).map((item) => item.card);
+const connectedVisitingCards = item.connectedVisitingCards.filter((item) => item.card).map((item) => item.card);
 
 const images = item.gallery?.map((item) => item.image?.path);
 
@@ -74,18 +73,19 @@ const images = item.gallery?.map((item) => item.image?.path);
 //   },
 // ];
 
-
 definePageMeta({
-  layout: 'withoutfooter'
+  layout: 'withoutfooter',
+});
+
+onMounted(() => {
+  isToggleDescriptionNeeded.value = descriptionContainer.value?.offsetHeight > 320;
 })
-
-
 </script>
 
 <style scoped lang="scss">
 .card_text_container {
   word-wrap: break-word !important;
-    padding: 16px 0;
+  padding: 16px 0;
 }
 
 .gallery-description {
@@ -106,14 +106,21 @@ definePageMeta({
   padding: 16px 0;
 }
 
-.read_more_button{
-  cursor:pointer;
-  display:flex;
+.read_more_button {
+  cursor: pointer;
+  display: flex;
   justify-content: center;
-  padding:20px;
-  border-radius:4px;
-  color:#f2a413;
-  font-size:1.2rem;
-  font-weight:bold;
+  padding: 20px;
+  border-radius: 4px;
+  color: #f2a413;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.shortened-container {
+  max-height: 320px;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
 }
 </style>
