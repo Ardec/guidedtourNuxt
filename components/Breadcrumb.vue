@@ -1,6 +1,6 @@
 <template>
   <div class="flex items-center">
-    <ol v-if="showHome" class="flex items-center gap-x-1.5">
+    <ol class="flex items-center gap-x-1.5">
       <li class="flex items-center gap-x-1.5 text-gray-500 dark:text-gray-400 text-sm">
         <NuxtLink to="/" class="flex items-center gap-x-1.5 group font-semibold hover:text-gray-700 dark:hover:text-gray-200">Home</NuxtLink>
         <span class="i-heroicons-chevron-right-20-solid rtl:i-heroicons-chevron-left-20-solid flex-shrink-0 w-5 h-5" role="presentation"></span>
@@ -21,8 +21,6 @@ const updateCrumbs = () => {
   if (lastRoutes[0]?.to === lastRoutes[1]?.to) {
     lastRoutes.pop();
   }
-
-  showHome.value = lastRoutes[0]?.to !== '/';
   
   items.value = lastRoutes;
 };
