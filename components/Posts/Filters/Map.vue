@@ -116,10 +116,18 @@ const setPosition = (position) => {
   userCords = [position.coords?.latitude, position.coords?.longitude];
   filters.lattitude = userCords[0];
   filters.longtitude = userCords[1];
+  if (userCords[0] && userCords[1]) {
+    geoPerm = true;
+    localStorage.setItem('geo_perm', 'true');
+  }
 };
 
-const errorPosition = (position) => {
-  console.warn('Nie udalo sie pobrac pozycji');
+const errorPosition = (error) => {
+  if (!userCords || !userCords[0] || !userCords[1] || error.code !== 3) {
+    console.warn(error);
+    console.warn('Nie udalo sie pobrac pozycji');
+    geoPerm = false;
+  }
 };
 
 const askForLocation = () => {
