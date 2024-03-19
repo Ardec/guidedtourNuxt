@@ -1,7 +1,11 @@
 export const askForLocation = (setPosition: (position: GeolocationPosition) => {}) => {
 
-  const errorPosition = () => {
+  const errorPosition = (error: GeolocationPositionError) => {
     console.warn('Nie udalo sie pobrac pozycji');
+    if (error?.code !== 3) {
+      console.warn(error);
+      console.warn('Nie udalo sie pobrac pozycji');
+    }
   };
 
   if (
