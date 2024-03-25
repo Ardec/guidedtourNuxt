@@ -115,26 +115,32 @@ const checkAvailabilityFilters = () => {
 
 const saveFiltersInCookie = (f, localisationTags, restOfTags) => {
   const filtersCookie = useCookie('filters', {
-    default: () => {},
+    default: () => [],
     watch: true,
   });
-  filtersCookie.value = {
+  filtersCookie.value = filtersCookie.value.filter(item => item.url !== window.location.href);
+  filtersCookie.value.push({
+    url: window.location.href,
     filters: { ...f },
     localisationTags: localisationTags || [],
     restOfTags: restOfTags || [],
-  };
+  });
+  if(filtersCookie.value.length > 20) {
+    filtersCookie.value.shift();
+  }
 };
 
 const checkFiltersInCookie = async () => {
   const filtersCookie = useCookie('filters');
-  if (filtersCookie && filtersCookie.value) {
-    Object.assign(filters.value, filtersCookie.value.filters);
-    Object.assign(localisationTags.value, filtersCookie.value.localisationTag);
-    Object.assign(restOfTags.value, filtersCookie.value.restOfTags);
+  let savedFilters = filtersCookie?.value?.find(item => item.url === window.location.href);
+  if (filtersCookie && filtersCookie.value && savedFilters) {
+    Object.assign(filters.value, savedFilters.filters);
+    Object.assign(localisationTags.value, savedFilters.localisationTag);
+    Object.assign(restOfTags.value, savedFilters.restOfTags);
     await findFilteredItems(
-      filtersCookie.value.filters,
-      filtersCookie.value.localisationTags,
-      filtersCookie.value.restOfTags
+      savedFilters.filters,
+      savedFilters.localisationTags,
+      savedFilters.restOfTags
     );
   }
 

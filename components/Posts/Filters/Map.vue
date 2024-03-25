@@ -70,6 +70,8 @@
   </div>
 </template>
 <script setup>
+const Leaflet = await import('leaflet');
+const L = Leaflet;
 const attrs = useAttrs();
 const filters = attrs.filters;
 const showMap = ref(false);
@@ -99,6 +101,7 @@ const popupOptions = {
   autoPan: false,
   closeButton: false,
   offset: [0, -5],
+  maxWidth: 100,
 };
 
 let watchId;
@@ -119,6 +122,12 @@ const setPosition = (position) => {
   if (userCords[0] && userCords[1]) {
     geoPerm = true;
     localStorage.setItem('geo_perm', 'true');
+
+    let userLatLng = L.latLng(userCords[0], userCords[1]);
+    markers.value.forEach((item) => {
+      const destLatLng = L.latLng(item.lattitude, item.longtitude);
+      item.distance = userLatLng.distanceTo(destLatLng);
+    });
   }
 };
 
@@ -209,5 +218,22 @@ watch(showAllMarkerBoxes, (newVal, oldVal) => {
     opacity: 1;
     background: #e8e8e8;
   }
+}
+
+.leaflet-popup-content {
+  margin: 5px;
+}
+
+.leaflet-popup-content-wrapper {
+  border: 1px solid #000;
+  font-size: 10px;
+
+  a {
+    line-height: 10px;
+  }
+}
+
+.leaflet-popup-tip {
+  display: none;
 }
 </style>
