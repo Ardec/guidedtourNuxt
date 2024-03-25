@@ -57,4 +57,10 @@
 .child {
   font-weight: 600;
 }
+
+.dark {
+  .results-title {
+    color: #fff;
+  }
+}
 </style>
