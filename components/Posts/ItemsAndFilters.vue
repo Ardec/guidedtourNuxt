@@ -11,6 +11,22 @@
     :isEventFilterActive="isEventFilterActive"
     :filterCounts="filterCounts"
     :allFilteredCount="filteredCount" />
+  <div class="flex flex-wrap gap-x-1">
+    <div style="width: 100px">Day</div>
+    <UInput v-model="filters.day" type="number" />
+  </div>
+  <div class="flex flex-wrap gap-x-1">
+    <div style="width: 100px">Hour</div>
+    <UInput v-model="filters.hour" type="number" />
+  </div>
+  <div class="flex flex-wrap gap-x-1">
+    <div style="width: 100px">Minute</div>
+    <UInput v-model="filters.minute" type="number" />
+  </div>
+  <div class="flex flex-wrap gap-x-1">
+    <div style="width: 100px">Promo Date</div>
+    <UInput v-model="filters.promoDate" />
+  </div>
   <div class="results-count">
     {{ filteredCount }} / {{ count }}
     {{ lang.chipSearchResults == null ? 'Wyników filtrowania' : lang.chipSearchResults }}
@@ -59,6 +75,10 @@ const filters = ref({
     date: undefined,
     time: undefined,
   },
+  day: undefined,
+  hour: undefined,
+  minute: undefined,
+  promoDate: undefined,
 });
 
 const mapFilters = (filters) => {
@@ -94,7 +114,7 @@ const mapTags = (localisationTagsData, restOfTagsData) => {
   if (restOfTagsData?.length > 0) {
     restOfTags.value = restOfTagsData?.map((t) => ({
       name: t.name,
-      value: false
+      value: false,
     }));
   }
   if (localisationTagsData?.length > 0) {
@@ -118,30 +138,26 @@ const saveFiltersInCookie = (f, localisationTags, restOfTags) => {
     default: () => [],
     watch: true,
   });
-  filtersCookie.value = filtersCookie.value.filter(item => item.url !== window.location.href);
+  filtersCookie.value = filtersCookie.value.filter((item) => item.url !== window.location.href);
   filtersCookie.value.push({
     url: window.location.href,
     filters: { ...f },
     localisationTags: localisationTags || [],
     restOfTags: restOfTags || [],
   });
-  if(filtersCookie.value.length > 20) {
+  if (filtersCookie.value.length > 20) {
     filtersCookie.value.shift();
   }
 };
 
 const checkFiltersInCookie = async () => {
   const filtersCookie = useCookie('filters');
-  let savedFilters = filtersCookie?.value?.find(item => item.url === window.location.href);
+  let savedFilters = filtersCookie?.value?.find((item) => item.url === window.location.href);
   if (filtersCookie && filtersCookie.value && savedFilters) {
     Object.assign(filters.value, savedFilters.filters);
     Object.assign(localisationTags.value, savedFilters.localisationTag);
     Object.assign(restOfTags.value, savedFilters.restOfTags);
-    await findFilteredItems(
-      savedFilters.filters,
-      savedFilters.localisationTags,
-      savedFilters.restOfTags
-    );
+    await findFilteredItems(savedFilters.filters, savedFilters.localisationTags, savedFilters.restOfTags);
   }
 
   watch(
@@ -189,8 +205,8 @@ const findAllPosts = async (filters) => {
 
 const findFilteredItemsAndSaveInCookie = async (filters, localisationTags, restOfTags) => {
   try {
-  saveFiltersInCookie(filters, localisationTags, restOfTags);
-  await findFilteredItems(filters, localisationTags, restOfTags);
+    saveFiltersInCookie(filters, localisationTags, restOfTags);
+    await findFilteredItems(filters, localisationTags, restOfTags);
   } catch (err) {
     error.value = err;
   }
@@ -198,9 +214,9 @@ const findFilteredItemsAndSaveInCookie = async (filters, localisationTags, restO
 
 const findFilteredItems = async (filters, localisationTags, restOfTags) => {
   try {
-  const cards = await useFetchFilteredCards(mapFilters(filters), localisationTags, restOfTags);
-  filterCounts.value = cards.value?.data?.filterCounts;
-  setItemsAndCounts(cards);
+    const cards = await useFetchFilteredCards(mapFilters(filters), localisationTags, restOfTags);
+    filterCounts.value = cards.value?.data?.filterCounts;
+    setItemsAndCounts(cards);
   } catch (err) {
     error.value = err;
   }
