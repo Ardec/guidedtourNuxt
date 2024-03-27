@@ -14,11 +14,10 @@
 <script setup>
 const { history } = useRouteHistoryState();
 const items = ref([]);
-const showHome = ref(false);
 
 const updateCrumbs = () => {
   let lastRoutes = history.value.slice(Math.max(history.value.length - 2, 0));
-  if (decodeURIComponent(lastRoutes[0]?.to) === decodeURIComponent(lastRoutes[1]?.to)) {
+  if (decodeURIComponent(lastRoutes[0]?.to?.replaceAll('%', '')) === decodeURIComponent(lastRoutes[1]?.to?.replaceAll('%', ''))) {
     lastRoutes.pop();
   }
   
